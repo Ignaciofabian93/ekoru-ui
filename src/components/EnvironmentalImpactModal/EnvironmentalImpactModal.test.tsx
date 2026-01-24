@@ -1,0 +1,251 @@
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { render, screen, cleanup } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
+import EnvironmentalImpactModal from './EnvironmentalImpactModal';
+
+describe('EnvironmentalImpactModal', () => {
+  const sampleImpact = {
+    totalCo2SavingsKG: 12.5,
+    totalWaterSavingsLT: 450,
+    materialBreakdown: [
+      {
+        materialType: 'Algodón',
+        percentage: 60,
+        weightKG: 0.3,
+        co2SavingsKG: 7.5,
+        waterSavingsLT: 270,
+      },
+      {
+        materialType: 'Poliéster',
+        percentage: 30,
+        weightKG: 0.15,
+        co2SavingsKG: 3.75,
+        waterSavingsLT: 135,
+      },
+    ],
+  };
+
+  const defaultProps = {
+    isOpen: true,
+    onClose: vi.fn(),
+    environmentalImpact: sampleImpact,
+  };
+
+  beforeEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  afterEach(() => {
+    cleanup();
+    document.body.innerHTML = '';
+    vi.clearAllMocks();
+  });
+
+  it('renders modal when isOpen is true', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    expect(screen.getByText('Impacto Ambiental Detallado')).toBeInTheDocument();
+  });
+
+  it('does not render modal when isOpen is false', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} isOpen={false} />);
+    expect(
+      screen.queryByText('Impacto Ambiental Detallado')
+    ).not.toBeInTheDocument();
+  });
+
+  it('displays total CO2 savings', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    expect(screen.getByText('12,5 kg')).toBeInTheDocument();
+    expect(screen.getByText('Ahorro de CO₂')).toBeInTheDocument();
+  });
+
+  it('displays total water savings', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    expect(screen.getByText('450,0 L')).toBeInTheDocument();
+    expect(screen.getByText('Ahorro de Agua')).toBeInTheDocument();
+  });
+
+  it('displays CO2 equivalent in km', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    // 12.5 * 4.5 = 56.25
+    expect(screen.getByText(/56,3 km en auto/)).toBeInTheDocument();
+  });
+
+  it('displays water equivalent in showers', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    // 450 / 8 = 56.25
+    expect(screen.getByText(/56,3 duchas/)).toBeInTheDocument();
+  });
+
+  it('displays material breakdown section when materials exist', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    expect(screen.getByText('Composición de Materiales')).toBeInTheDocument();
+  });
+
+  it('displays all materials in breakdown', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    expect(screen.getByText('Algodón')).toBeInTheDocument();
+    expect(screen.getByText('Poliéster')).toBeInTheDocument();
+  });
+
+  it('displays material percentages', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    expect(screen.getByText('60.0%')).toBeInTheDocument();
+    expect(screen.getByText('30.0%')).toBeInTheDocument();
+  });
+
+  it('displays material weights', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    const weightElements = screen.getAllByText(/0,3 kg|0,2 kg/);
+    expect(weightElements.length).toBeGreaterThan(0);
+  });
+
+  it('displays material CO2 savings', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    const co2Elements = screen.getAllByText(/7,5 kg|3,8 kg/);
+    expect(co2Elements.length).toBeGreaterThan(0);
+  });
+
+  it('displays material water savings', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    const waterElements = screen.getAllByText(/270,0 L|135,0 L/);
+    expect(waterElements.length).toBeGreaterThan(0);
+  });
+
+  it('does not display material breakdown when empty', () => {
+    const propsWithoutMaterials = {
+      ...defaultProps,
+      environmentalImpact: {
+        ...sampleImpact,
+        materialBreakdown: [],
+      },
+    };
+    render(<EnvironmentalImpactModal {...propsWithoutMaterials} />);
+    expect(
+      screen.queryByText('Composición de Materiales')
+    ).not.toBeInTheDocument();
+  });
+
+  it('displays info footer with disclaimer', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    expect(
+      screen.getByText(/Estos valores son estimaciones/)
+    ).toBeInTheDocument();
+  });
+
+  it('displays progress bars for materials', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    const dialog = screen.getByRole('dialog');
+    const progressBars = dialog.querySelectorAll('.bg-primary.rounded-full');
+    expect(progressBars.length).toBe(2); // One for each material
+  });
+
+  it('renders with single material', () => {
+    const singleMaterialProps = {
+      ...defaultProps,
+      environmentalImpact: {
+        totalCo2SavingsKG: 8.2,
+        totalWaterSavingsLT: 320,
+        materialBreakdown: [
+          {
+            materialType: 'Algodón Orgánico',
+            percentage: 100,
+            weightKG: 0.5,
+            co2SavingsKG: 8.2,
+            waterSavingsLT: 320,
+          },
+        ],
+      },
+    };
+    render(<EnvironmentalImpactModal {...singleMaterialProps} />);
+    expect(screen.getByText('Algodón Orgánico')).toBeInTheDocument();
+    expect(screen.getByText('100.0%')).toBeInTheDocument();
+  });
+
+  it('renders with multiple materials', () => {
+    const multipleMaterialsProps = {
+      ...defaultProps,
+      environmentalImpact: {
+        totalCo2SavingsKG: 18.7,
+        totalWaterSavingsLT: 720,
+        materialBreakdown: [
+          {
+            materialType: 'Algodón',
+            percentage: 40,
+            weightKG: 0.25,
+            co2SavingsKG: 7.48,
+            waterSavingsLT: 288,
+          },
+          {
+            materialType: 'Poliéster',
+            percentage: 25,
+            weightKG: 0.16,
+            co2SavingsKG: 4.675,
+            waterSavingsLT: 180,
+          },
+          {
+            materialType: 'Lino',
+            percentage: 15,
+            weightKG: 0.09,
+            co2SavingsKG: 2.805,
+            waterSavingsLT: 108,
+          },
+        ],
+      },
+    };
+    render(<EnvironmentalImpactModal {...multipleMaterialsProps} />);
+    expect(screen.getByText('Algodón')).toBeInTheDocument();
+    expect(screen.getByText('Poliéster')).toBeInTheDocument();
+    expect(screen.getByText('Lino')).toBeInTheDocument();
+  });
+
+  it('formats large numbers correctly', () => {
+    const largeNumbersProps = {
+      ...defaultProps,
+      environmentalImpact: {
+        totalCo2SavingsKG: 125.8,
+        totalWaterSavingsLT: 5250,
+        materialBreakdown: [],
+      },
+    };
+    render(<EnvironmentalImpactModal {...largeNumbersProps} />);
+    expect(screen.getByText('125,8 kg')).toBeInTheDocument();
+    expect(screen.getByText('5.250,0 L')).toBeInTheDocument();
+  });
+
+  it('displays icons for CO2 and water savings', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    const dialog = screen.getByRole('dialog');
+    // Check for Leaf and Droplets icons (they render as SVG)
+    const leafIcon = dialog.querySelector('.lucide-leaf');
+    const dropletsIcon = dialog.querySelector('.lucide-droplets');
+    expect(leafIcon).toBeInTheDocument();
+    expect(dropletsIcon).toBeInTheDocument();
+  });
+
+  it('applies hover styles to material cards', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    const dialog = screen.getByRole('dialog');
+    const materialCards = dialog.querySelectorAll('.hover\\:bg-neutral\\/5');
+    expect(materialCards.length).toBeGreaterThan(0);
+  });
+
+  it('calls onClose when modal is closed', async () => {
+    const onClose = vi.fn();
+    const user = userEvent.setup();
+    render(<EnvironmentalImpactModal {...defaultProps} onClose={onClose} />);
+
+    const closeButton = screen.getByRole('button', { name: 'Close modal' });
+    await user.click(closeButton);
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders modal with medium size', () => {
+    render(<EnvironmentalImpactModal {...defaultProps} />);
+    const dialog = screen.getByRole('dialog');
+    const modalContainer = dialog.querySelector('.max-w-lg');
+    expect(modalContainer).toBeInTheDocument();
+  });
+});

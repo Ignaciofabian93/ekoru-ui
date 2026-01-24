@@ -1,0 +1,282 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand Colors */
+    --primary: 101 163 13; /* lime-600 */
+    --primary-dark: 63 98 18; /* lime-800 */
+    --primary-hover: 132 204 22; /* lime-400 */
+    --primary-active: 77 124 15; /* lime-700 */
+
+    --secondary: 34 211 238; /* cyan-400 */
+    --secondary-dark: 14 116 144; /* cyan-700 */
+    --secondary-hover: 103 232 249; /* cyan-300 */
+
+    --accent: 245 158 11; /* amber-500 */
+    --accent-hover: 251 191 36; /* amber-400 */
+
+    --danger: 239 68 68; /* red-500 */
+    --danger-hover: 248 113 113; /* red-400 */
+
+    --success: 34 197 94; /* green-500 */
+    --warning: 234 179 8; /* yellow-500 */
+    --info: 59 130 246; /* blue-500 */
+
+    /* Backgrounds */
+    --background: 253 255 252; /* #fdfffc custom white */
+    --background-secondary: 249 250 251; /* gray-50 */
+    --background-tertiary: 243 244 246; /* gray-100 */
+
+    /* Surfaces - Cards, Modals, Dropdowns */
+    --surface: 255 255 255; /* pure white */
+    --surface-elevated: 255 255 255; /* white - elevated surface */
+    --surface-hover: 249 250 251; /* gray-50 - hover state */
+    --surface-active: 243 244 246; /* gray-100 - active/pressed */
+
+    /* Items - Options */
+    --item: 101 163 13; /* base item */
+    --item-hover: 230 230 230; /* hover state */
+
+    /* Text/Foreground */
+    --foreground: 31 41 55; /* gray-800 - primary text */
+    --foreground-secondary: 75 85 99; /* gray-600 - secondary text */
+    --foreground-tertiary: 156 163 175; /* gray-400 - tertiary text */
+    --foreground-muted: 209 213 219; /* gray-300 - muted/disabled */
+
+    /* Borders */
+    --border: 168 168 168; /* gray-200 - default border */
+    --border-light: 243 244 246; /* gray-100 - light border */
+    --border-strong: 209 213 219; /* gray-300 - strong border */
+    --border-focus: 132 204 22; /* primary - focus state */
+
+    /* Navbar */
+    --navbar: 217 249 157; /* lime-200 */
+    --navbar-hover: 190 242 100; /* lime-300 */
+    --navbar-text: 255 255 255; /* white */
+    --navbar-border: 229 231 235; /* gray-200 */
+    --navbar-gradient-from: 63 98 18; /* primary-dark */
+    --navbar-gradient-via: 101 163 13; /* primary */
+    --navbar-gradient-to: 63 98 18; /* primary-dark */
+
+    /* Sidebar */
+    --sidebar-bg: 249 250 251; /* gray-50 */
+    --sidebar-hover: 243 244 246; /* gray-100 */
+    --sidebar-active: 217 249 157; /* lime-200 */
+    --sidebar-text: 31 41 55; /* gray-800 */
+    --sidebar-border: 229 231 235; /* gray-200 */
+
+    /* Footer */
+    --footer-bg: 217 249 157; /* lime-200 */
+    --footer-text: 31 41 55; /* gray-800 */
+    --footer-border: 229 231 235; /* gray-200 */
+
+    /* Modals & Overlays */
+    --modal-bg: 255 255 255; /* white */
+    --modal-overlay: 0 0 0; /* black with opacity */
+    --modal-border: 229 231 235; /* gray-200 */
+
+    /* Inputs & Forms */
+    --input-bg: 255 255 255; /* white */
+    --input-border: 209 213 219; /* gray-300 */
+    --input-border-hover: 156 163 175; /* gray-400 */
+    --input-border-focus: 132 204 22; /* primary */
+    --input-text: 31 41 55; /* gray-800 */
+    --input-placeholder: 156 163 175; /* gray-400 */
+    --input-disabled: 243 244 246; /* gray-100 */
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark {
+    /* Brand Colors - Brighter in dark mode */
+    --primary: 101 163 13; /* lime-400 */
+    --primary-hover: 132 204 22; /* lime-300 */
+    --primary-active: 132 204 22; /* lime-500 */
+
+    --secondary: 96 165 250; /* blue-400 */
+    --secondary-hover: 147 197 253; /* blue-300 */
+
+    --accent: 251 191 36; /* amber-400 */
+    --accent-hover: 252 211 77; /* amber-300 */
+
+    --danger: 248 113 113; /* red-400 */
+    --danger-hover: 252 165 165; /* red-300 */
+
+    --success: 74 222 128; /* green-400 */
+    --warning: 250 204 21; /* yellow-400 */
+    --info: 96 165 250; /* blue-400 */
+
+    /* Backgrounds */
+    --background: 9 9 11; /* #111213 custom black */
+    --background-secondary: 38 38 38; /* slightly lighter */
+    --background-tertiary: 48 48 48; /* tertiary level */
+
+    /* Surfaces - Cards, Modals, Dropdowns */
+    --surface: 24 24 27; /* base surface */
+    --surface-elevated: 39 39 42; /* elevated (modals, dropdowns) */
+    --surface-hover: 58 58 58; /* hover state */
+    --surface-active: 68 68 68; /* active/pressed */
+
+    /* Items - Options */
+    --item: 101 163 13; /* base item */
+    --item-hover: 68 68 68; /* hover state */
+
+    /* Text/Foreground */
+    --foreground: 253 255 252; /* #fdfffc custom white */
+    --foreground-secondary: 229 231 235; /* gray-200 */
+    --foreground-tertiary: 156 163 175; /* gray-400 */
+    --foreground-muted: 115 115 115; /* gray-500 */
+
+    /* Borders */
+    --border: 68 68 68; /* subtle border */
+    --border-light: 58 58 58; /* lighter border */
+    --border-strong: 82 82 82; /* stronger border */
+    --border-focus: 163 230 53; /* primary */
+
+    /* Navbar */
+    --navbar: 30 30 30; /* dark bg */
+    --navbar-hover: 48 48 48; /* hover */
+    --navbar-text: 253 255 252; /* white */
+    --navbar-border: 68 68 68; /* border */
+    --navbar-gradient-from: 30 41 59; /* slate-800 */
+    --navbar-gradient-via: 51 65 85; /* slate-700 */
+    --navbar-gradient-to: 30 41 59; /* slate-800 */
+
+    /* Subheader */
+    --subheader-bg: 60 60 60; /* dark bg */
+    --subheader-text: 253 255 252; /* white */
+    --subheader-border: 68 68 68; /* border */
+
+    /* Sidebar */
+    --sidebar-bg: 30 30 30; /* dark bg */
+    --sidebar-hover: 48 48 48; /* hover */
+    --sidebar-active: 68 68 68; /* active */
+    --sidebar-text: 253 255 252; /* white */
+    --sidebar-border: 68 68 68; /* border */
+
+    /* Footer */
+    --footer-bg: 30 30 30; /* dark bg */
+    --footer-text: 253 255 252; /* white */
+    --footer-border: 68 68 68; /* border */
+
+    /* Modals & Overlays */
+    --modal-bg: 48 48 48; /* elevated surface */
+    --modal-overlay: 0 0 0; /* black with opacity */
+    --modal-border: 68 68 68; /* border */
+
+    /* Inputs & Forms */
+    --input-bg: 250 250 250; /* elevated */
+    --input-border: 68 68 68; /* border */
+    --input-border-hover: 82 82 82; /* hover */
+    --input-border-focus: 163 230 53; /* primary */
+    --input-text: 30 30 30; /* white */
+    --input-placeholder: 156 163 175; /* gray-400 */
+    --input-disabled: 58 58 58; /* disabled */
+
+    /* Shadows - Lighter in dark mode */
+    --shadow-sm: 0 0 4px 1px rgba(150, 150, 150, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 0 4px 1px rgba(150, 150, 150, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+  }
+}
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .navbar-container {
+    @apply bg-gradient-to-r from-navbar-gradient-from via-navbar-gradient-via to-navbar-gradient-to
+           sticky top-0 z-50;
+  }
+  .btn {
+    @apply min-w-[140px]
+           rounded-lg 
+           font-medium 
+           shadow-md 
+           transition-all duration-200
+           flex items-center justify-center 
+           space-x-2;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Card flip effect */
+.card-flip-perspective {
+  perspective: 1200px;
+}
+.card-flip-inner {
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.card-flip-flipped {
+  transform: rotateY(180deg);
+}
+.card-flip-front,
+.card-flip-back {
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.card-flip-back {
+  transform: rotateY(180deg);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+/* Shimmer animation for loading states */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
