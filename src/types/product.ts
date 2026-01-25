@@ -73,6 +73,8 @@ export interface MarketplaceProduct {
   conditionDescription?: string;
   deletedAt?: string; // Soft delete - null means active
   seller?: Partial<Seller>;
+  /** Environmental impact summary, may come from product category or store category */
+  environmentalImpact?: EnvironmentalImpact | undefined;
   productCategory?: ProductCategory;
 }
 
@@ -100,8 +102,24 @@ export type StoreProduct = {
   reviewsNumber: number;
   storeSubCategoryId: number;
   storeSubCategory: StoreSubCategory;
+  /** Environmental impact summary, may come from product category or store category */
+  environmentalImpact?: EnvironmentalImpact | undefined;
   deletedAt?: string;
 };
+
+export interface MaterialBreakdown {
+  materialType: string;
+  percentage: number;
+  weightKG?: number;
+  co2SavingsKG?: number;
+  waterSavingsLT?: number;
+}
+
+export interface EnvironmentalImpact {
+  totalCo2SavingsKG: number;
+  totalWaterSavingsLT: number;
+  materialBreakdown: MaterialBreakdown[];
+}
 
 export type ProductVariant = {
   id: number;

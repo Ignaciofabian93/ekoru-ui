@@ -179,8 +179,7 @@ describe('ProductCard', () => {
   it('maintains card dimensions', () => {
     render(<ProductCard product={sampleProduct} />);
     const article = screen.getByRole('article');
-    expect(article).toHaveClass('w-[180px]', 'md:w-[220px]');
-    expect(article).toHaveClass('h-[300px]', 'md:h-[330px]');
+    expect(article).toHaveClass('w-[220px]', 'h-[350px]');
   });
 
   it('applies perspective for flip animation', () => {

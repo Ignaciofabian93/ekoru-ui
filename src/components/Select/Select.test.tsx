@@ -301,7 +301,7 @@ describe('Select', () => {
     });
 
     // Color circles should be rendered
-    const circles = screen.getAllByText((content, element) => {
+    const circles = screen.getAllByText((_content, element) => {
       return element?.tagName.toLowerCase() === 'svg';
     });
     expect(circles.length).toBeGreaterThan(0);
