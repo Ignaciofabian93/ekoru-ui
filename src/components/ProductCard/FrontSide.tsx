@@ -1,6 +1,7 @@
 import { IterationCw, RotateCcw, ShoppingCart } from 'lucide-react';
 import { ProductCondition } from '@/types/enums';
 import { Button } from '../Button';
+import clsx from 'clsx';
 
 export interface FrontSideProps {
   isFlipped: boolean;
@@ -78,7 +79,24 @@ export default function CardFrontSide({
   };
 
   return (
-    <div className="card-flip-front bg-white dark:bg-stone-800 rounded-xl shadow-md border border-gray-200/60 dark:border-stone-700/60 overflow-hidden hover:shadow-xl hover:border-primary/40 dark:hover:border-primary/50 transition-all duration-300 group">
+    <div
+      className={clsx(
+        // CSS Global Classes
+        'card-flip-front',
+        // Colors and Styles
+        'bg-white dark:bg-stone-800',
+        'rounded-xl shadow-md',
+        'border border-gray-200/60 dark:border-stone-700/60',
+        'overflow-hidden',
+        // Hover Effects
+        'hover:shadow-xl',
+        'hover:border-primary/40',
+        'dark:hover:border-primary/50',
+        // Transitions
+        'transition-all duration-300',
+        'group'
+      )}
+    >
       {/* Image Container */}
       <figure className="relative aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 dark:from-stone-700 dark:to-stone-800 overflow-hidden">
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-300 pointer-events-none z-[1]" />
