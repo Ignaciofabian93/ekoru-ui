@@ -1,4 +1,5 @@
 import { type LucideIcon } from 'lucide-react';
+import clsx from 'clsx';
 
 export interface AdBannerProps {
   icon?: LucideIcon;
@@ -18,21 +19,54 @@ export default function AdBanner({
   const Icon = icon as LucideIcon;
   return (
     <article
-      className={`flex flex-col sm:flex-row items-center gap-4 py-4 px-2 justify-between w-full border-t border-b border-gray-200 ${className}`}
+      className={clsx(
+        'flex flex-col sm:flex-row',
+        'items-center gap-4 py-4 px-2',
+        'justify-between',
+        'w-full',
+        'border-t border-b border-gray-200',
+        className
+      )}
     >
-      <div className="flex flex-col items-center sm:items-start justify-center">
+      <div
+        className={clsx(
+          'flex flex-col',
+          'items-center sm:items-start justify-center'
+        )}
+      >
         {icon && (
-          <div className="w-20 h-20 flex items-center justify-center rounded-lg bg-primary/10 mb-2">
+          <div
+            className={clsx(
+              'w-20 h-20 flex items-center justify-center',
+              'rounded-lg',
+              'bg-primary/10',
+              'mb-2'
+            )}
+          >
             <Icon className="w-10 h-10 text-primary" />
           </div>
         )}
         {title && (
-          <h3 className="text-lg font-bold text-gray-900 dark:text-stone-100 mb-1">
+          <h3
+            className={clsx(
+              'text-lg font-bold',
+              'text-gray-900',
+              'dark:text-stone-100',
+              'mb-1'
+            )}
+          >
             {title}
           </h3>
         )}
         {description && (
-          <div className="text-gray-600 dark:text-stone-400 text-sm mb-3">
+          <div
+            className={clsx(
+              'text-gray-600',
+              'dark:text-stone-400',
+              'text-sm',
+              'mb-3'
+            )}
+          >
             {description}
           </div>
         )}
