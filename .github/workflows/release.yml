@@ -33,7 +33,15 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --workspace-root
+        run: |
+          # Prefer frozen install if lockfile exists; otherwise fall back to non-frozen install
+          if [ -f "pnpm-lock.yaml" ]; then
+            echo "Found pnpm-lock.yaml — using frozen install"
+            pnpm install --frozen-lockfile
+          else
+            echo "No pnpm-lock.yaml found — running install with --no-frozen-lockfile"
+            pnpm install --no-frozen-lockfile
+          fi
 
       - name: Build library
         run: pnpm build
