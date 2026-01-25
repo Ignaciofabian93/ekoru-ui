@@ -15,6 +15,7 @@ const meta = {
       options: [
         'primary',
         'secondary',
+        'secondary_outline',
         'outline',
         'ghost',
         'success',
@@ -72,6 +73,13 @@ export const Outline: Story = {
   args: {
     children: 'Outline Button',
     variant: 'outline',
+  },
+};
+
+export const SecondaryOutline: Story = {
+  args: {
+    children: 'Secondary Outline',
+    variant: 'secondary_outline',
   },
 };
 

@@ -12,6 +12,7 @@ import {
   UserRound,
   ChevronRight,
 } from 'lucide-react';
+import { cn } from '@/utils';
 
 export interface BackSideProps {
   isFlipped: boolean;
@@ -111,15 +112,55 @@ export default function CardBackSide({
     : null;
 
   return (
-    <div className="card-flip-back bg-gradient-to-br from-white via-emerald-50/20 to-white dark:from-stone-800 dark:via-stone-850 dark:to-stone-900 border-2 border-gray-200/60 dark:border-stone-700/50">
-      <div className="py-4 px-4 w-full h-full flex flex-col overflow-y-auto scrollbar-hide relative">
+    <div
+      className={cn(
+        'card-flip-back',
+        'bg-gradient-to-br from-white via-emerald-50/20 to-white',
+        'dark:from-stone-800 dark:via-stone-850 dark:to-stone-900',
+        'border-2 border-gray-200/60',
+        'dark:border-stone-700/50'
+      )}
+    >
+      <div
+        className={cn(
+          'py-4',
+          'px-4',
+          'w-full',
+          'h-full',
+          'flex',
+          'flex-col',
+          'overflow-y-auto',
+          'scrollbar-hide',
+          'relative'
+        )}
+      >
         {/* Flip Button */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             setIsFlipped(!isFlipped);
           }}
-          className="absolute top-2 right-2 bg-white/90 dark:bg-stone-800/90 hover:bg-primary dark:hover:bg-primary backdrop-blur-md text-gray-700 dark:text-stone-200 hover:text-white p-1.5 rounded-lg shadow-lg transition-all duration-200 hover:scale-110 z-10 border border-gray-200/50 dark:border-stone-600/50"
+          className={cn(
+            'absolute top-2 right-2',
+            'bg-white/90',
+            'dark:bg-stone-800/90',
+            'hover:bg-primary',
+            'dark:hover:bg-primary',
+            'backdrop-blur-md',
+            'text-gray-700',
+            'dark:text-stone-200',
+            'hover:text-white',
+            'p-1.5',
+            'rounded-lg',
+            'shadow-lg',
+            'transition-all',
+            'duration-200',
+            'hover:scale-110',
+            'z-10',
+            'border',
+            'border-gray-200/50',
+            'dark:border-stone-600/50'
+          )}
           aria-label="Ver producto"
         >
           <RotateCcw className="w-3.5 h-3.5" />
@@ -129,7 +170,17 @@ export default function CardBackSide({
         {environmentalImpact && (
           <div className="mb-4">
             <div className="flex items-center justify-between mb-0.5">
-              <h4 className="font-bold text-gray-900 dark:text-stone-100 text-xs flex items-center gap-1.5">
+              <h4
+                className={cn(
+                  'font-bold',
+                  'text-gray-900',
+                  'dark:text-stone-100',
+                  'text-xs',
+                  'flex',
+                  'items-center',
+                  'gap-1.5'
+                )}
+              >
                 <Leaf className="w-3.5 h-3.5 text-success" />
                 {impactLabel}
               </h4>
@@ -137,7 +188,17 @@ export default function CardBackSide({
             <div className="mb-3">
               {impactLevel && (
                 <span
-                  className={`text-[9px] font-semibold px-2 py-0.5 rounded-full bg-${impactLevel.color}/15 text-${impactLevel.color} border border-${impactLevel.color}/30`}
+                  className={cn(
+                    'text-[9px]',
+                    'font-semibold',
+                    'px-2',
+                    'py-0.5',
+                    'rounded-full',
+                    `bg-${impactLevel.color}/15`,
+                    `text-${impactLevel.color}`,
+                    `border`,
+                    `border-${impactLevel.color}/30`
+                  )}
                 >
                   {impactLevel.level}
                 </span>
@@ -145,16 +206,41 @@ export default function CardBackSide({
             </div>
 
             {/* Impact Progress Bar - Delgado */}
-            <div className="mb-2.5 bg-gray-200/60 dark:bg-stone-700/50 rounded-full h-1 overflow-hidden">
+            <div
+              className={cn(
+                'mb-2.5',
+                'bg-gray-200/60',
+                'dark:bg-stone-700/50',
+                'rounded-full',
+                'h-1',
+                'overflow-hidden'
+              )}
+            >
               <div
-                className={`h-full bg-gradient-to-r from-success to-success/70 rounded-full transition-all duration-1000`}
+                className={cn(
+                  'h-full',
+                  'bg-gradient-to-r from-success to-success/70',
+                  'rounded-full',
+                  'transition-all',
+                  'duration-1000'
+                )}
                 style={{ width: impactLevel?.width || '0%' }}
               />
             </div>
 
             {/* Impact Stats - Grid compacto */}
             <div className="grid grid-cols-2 gap-2 mb-2.5">
-              <div className="bg-gradient-to-br from-success/8 to-transparent dark:from-success/15 dark:to-transparent rounded-lg p-1.5 border border-success/20 dark:border-success/30">
+              <div
+                className={cn(
+                  'bg-gradient-to-br from-success/8 to-transparent',
+                  'dark:from-success/15 dark:to-transparent',
+                  'rounded-lg',
+                  'p-1.5',
+                  'border',
+                  'border-success/20',
+                  'dark:border-success/30'
+                )}
+              >
                 <div className="flex items-center gap-1 mb-0.5">
                   <Leaf className="w-3 h-3 text-success" />
                   <span className="text-[9px] text-gray-600 dark:text-stone-400 font-medium">
@@ -166,7 +252,17 @@ export default function CardBackSide({
                 </p>
               </div>
 
-              <div className="bg-gradient-to-br from-info/8 to-transparent dark:from-info/15 dark:to-transparent rounded-lg p-1.5 border border-info/20 dark:border-info/30">
+              <div
+                className={cn(
+                  'bg-gradient-to-br from-info/8 to-transparent',
+                  'dark:from-info/15 dark:to-transparent',
+                  'rounded-lg',
+                  'p-1.5',
+                  'border',
+                  'border-info/20',
+                  'dark:border-info/30'
+                )}
+              >
                 <div className="flex items-center gap-1 mb-0.5">
                   <Droplets className="w-3 h-3 text-info" />
                   <span className="text-[9px] text-gray-600 dark:text-stone-400 font-medium">
@@ -182,7 +278,17 @@ export default function CardBackSide({
             {/* Material Breakdown - Compacto */}
             {normalizedImpact &&
               normalizedImpact.materialBreakdown.length > 0 && (
-                <div className="bg-gray-50/80 dark:bg-stone-800/50 rounded-lg p-2.5 border border-gray-200/50 dark:border-stone-700/50">
+                <div
+                  className={cn(
+                    'bg-gray-50/80',
+                    'dark:bg-stone-800/50',
+                    'rounded-lg',
+                    'p-2.5',
+                    'border',
+                    'border-gray-200/50',
+                    'dark:border-stone-700/50'
+                  )}
+                >
                   <p className="text-[9px] font-semibold text-gray-700 dark:text-stone-300 mb-2">
                     {materialsLabel}
                   </p>
@@ -201,7 +307,13 @@ export default function CardBackSide({
                           </div>
                           <div className="bg-gray-200 dark:bg-stone-700 rounded-full h-1 overflow-hidden">
                             <div
-                              className="h-full bg-gradient-to-r from-primary to-primary-hover rounded-full transition-all duration-500"
+                              className={cn(
+                                'h-full',
+                                'bg-gradient-to-r from-primary to-primary-hover',
+                                'rounded-full',
+                                'transition-all',
+                                'duration-500'
+                              )}
                               style={{ width: `${material.percentage}%` }}
                             />
                           </div>
@@ -215,7 +327,31 @@ export default function CardBackSide({
                       e.stopPropagation();
                       setShowImpactModal(true);
                     }}
-                    className="w-full mt-2.5 py-1.5 px-3 bg-primary/5 hover:bg-primary/10 dark:bg-primary/10 dark:hover:bg-primary/15 text-primary dark:text-primary-hover rounded-lg text-[9px] font-semibold transition-all duration-200 flex items-center justify-center gap-1 border border-primary/20 hover:border-primary/30 group/viewmore"
+                    className={cn(
+                      'w-full',
+                      'mt-2.5',
+                      'py-1.5',
+                      'px-3',
+                      'bg-primary/5',
+                      'hover:bg-primary/10',
+                      'dark:bg-primary/10',
+                      'dark:hover:bg-primary/15',
+                      'text-primary',
+                      'dark:text-primary-hover',
+                      'rounded-lg',
+                      'text-[9px]',
+                      'font-semibold',
+                      'transition-all',
+                      'duration-200',
+                      'flex',
+                      'items-center',
+                      'justify-center',
+                      'gap-1',
+                      'border',
+                      'border-primary/20',
+                      'hover:border-primary/30',
+                      'group/viewmore'
+                    )}
                   >
                     {viewMoreLabel}
                     <ChevronRight className="w-3 h-3 group-hover/viewmore:translate-x-0.5 transition-transform duration-200" />
@@ -233,7 +369,18 @@ export default function CardBackSide({
               {sellerLabel}
             </h4>
           </div>
-          <div className="space-y-1.5 bg-gray-50/80 dark:bg-stone-800/50 rounded-lg p-2.5 border border-gray-200/50 dark:border-stone-700/50">
+          <div
+            className={cn(
+              'space-y-1.5',
+              'bg-gray-50/80',
+              'dark:bg-stone-800/50',
+              'rounded-lg',
+              'p-2.5',
+              'border',
+              'border-gray-200/50',
+              'dark:border-stone-700/50'
+            )}
+          >
             {sellerName && (
               <div className="flex items-center gap-2 text-gray-700 dark:text-stone-300 text-[9px] font-medium">
                 <UserRound className="w-3 h-3 flex-shrink-0 text-gray-400 dark:text-stone-500" />

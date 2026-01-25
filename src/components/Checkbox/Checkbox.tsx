@@ -99,9 +99,9 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const generatedId = id || name || `checkbox-${reactId}`;
 
     return (
-      <div className="space-y-1">
-        <div className="flex items-start space-x-3">
-          <div className="relative">
+      <motion.div className="space-y-1">
+        <motion.div className="flex items-start space-x-3">
+          <motion.div className="relative">
             <motion.button
               type="button"
               onClick={() => !disabled && onCheckedChange?.(!checked)}
@@ -139,10 +139,10 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
               className="sr-only"
               {...props}
             />
-          </div>
+          </motion.div>
           {label && (
-            <div className="flex-1">
-              <label
+            <motion.div className="flex-1">
+              <motion.label
                 htmlFor={generatedId}
                 className={cn(
                   'text-sm font-medium cursor-pointer',
@@ -153,15 +153,15 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
                 )}
               >
                 {label}
-              </label>
+              </motion.label>
               {description && (
-                <p className="text-sm text-foreground-tertiary mt-1">
+                <motion.p className="text-sm text-foreground-tertiary mt-1">
                   {description}
-                </p>
+                </motion.p>
               )}
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
         {errorMessage && (
           <motion.p
             initial={{ opacity: 0, y: -5 }}
@@ -172,7 +172,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             {errorMessage}
           </motion.p>
         )}
-      </div>
+      </motion.div>
     );
   }
 );

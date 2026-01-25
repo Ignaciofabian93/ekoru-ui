@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, Search, X } from 'lucide-react';
+import { cn } from '@/utils';
 
 export interface NavbarProps {
   brand?: React.ReactNode;
@@ -99,7 +100,18 @@ export default function Navbar({
                     value={searchQuery}
                     onChange={handleSearchChange}
                     placeholder={searchPlaceholder}
-                    className="w-full px-4 py-2 rounded-lg border border-input-border bg-input-bg text-foreground placeholder:text-foreground-tertiary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className={cn(
+                      'w-full px-4 py-2',
+                      'rounded-lg',
+                      'border border-input-border',
+                      'bg-input-bg',
+                      'text-foreground',
+                      'placeholder:text-foreground-tertiary',
+                      'focus:outline-none',
+                      'focus:ring-2',
+                      'focus:ring-primary',
+                      'focus:border-transparent'
+                    )}
                   />
                   <Search className="h-5 w-5 text-primary absolute right-4" />
                 </form>
@@ -123,7 +135,14 @@ export default function Navbar({
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 rounded-lg text-white hover:bg-primary/30 transition-colors lg:hidden"
+                className={cn(
+                  'p-2',
+                  'rounded-lg',
+                  'text-white',
+                  'hover:bg-primary/30',
+                  'transition-colors',
+                  'lg:hidden'
+                )}
                 aria-label={toggleMobileMenuAriaLabel}
                 aria-expanded={isMobileMenuOpen}
               >
@@ -146,7 +165,19 @@ export default function Navbar({
                   value={searchQuery}
                   onChange={handleSearchChange}
                   placeholder={searchPlaceholder}
-                  className="w-full px-4 py-2 rounded-lg border border-input-border bg-input-bg text-foreground placeholder:text-foreground-tertiary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className={cn(
+                    'w-full',
+                    'px-4 py-2',
+                    'rounded-lg',
+                    'border border-input-border',
+                    'bg-input-bg',
+                    'text-foreground',
+                    'placeholder:text-foreground-tertiary',
+                    'focus:outline-none',
+                    'focus:ring-2',
+                    'focus:ring-primary',
+                    'focus:border-transparent'
+                  )}
                 />
                 <Search className="h-5 w-5 text-primary absolute right-4" />
               </form>
@@ -181,7 +212,15 @@ export default function Navbar({
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.3 }}
-              className="relative w-full max-w-sm bg-background shadow-xl h-full overflow-y-auto"
+              className={cn(
+                'relative',
+                'w-full',
+                'max-w-sm',
+                'bg-background',
+                'shadow-xl',
+                'h-full',
+                'overflow-y-auto'
+              )}
             >
               <div className="p-6">
                 {/* Menu Header */}
@@ -194,7 +233,13 @@ export default function Navbar({
                   </h2>
                   <button
                     onClick={closeMobileMenu}
-                    className="p-2 rounded-lg text-foreground hover:bg-background-secondary transition-colors"
+                    className={cn(
+                      'p-2',
+                      'rounded-lg',
+                      'text-foreground',
+                      'hover:bg-background-secondary',
+                      'transition-colors'
+                    )}
                     aria-label="Close mobile menu"
                   >
                     <X className="h-6 w-6" />

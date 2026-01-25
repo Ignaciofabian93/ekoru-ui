@@ -163,7 +163,17 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                 type="button"
                 onClick={togglePasswordVisibility}
                 disabled={disabled}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-foreground-tertiary hover:text-foreground-secondary transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className={cn(
+                  'absolute right-3 top-1/2',
+                  'transform',
+                  '-translate-y-1/2',
+                  'text-foreground-tertiary',
+                  'hover:text-foreground-secondary',
+                  'transition-colors',
+                  'duration-200',
+                  'disabled:opacity-50',
+                  'disabled:cursor-not-allowed'
+                )}
                 tabIndex={-1}
               >
                 <AnimatePresence mode="wait">

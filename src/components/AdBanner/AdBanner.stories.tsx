@@ -20,15 +20,40 @@ export const Default: Story = {
   },
 };
 
-export const InlineCTA: Story = {
+export const Primary: Story = {
   args: {
-    icon: Info,
-    title: 'Limited time offer',
-    description: 'Free shipping over $50',
-    cta: (
-      <a className="px-3 py-1 rounded bg-primary text-white" href="#">
-        Shop now
-      </a>
-    ),
+    ...Default.args,
+    variant: 'primary',
+    animated: true,
+  },
+};
+
+export const Secondary: Story = {
+  args: {
+    ...Default.args,
+    variant: 'secondary',
+    cta: <Button variant="secondary_outline">Subscribe</Button>,
+  },
+};
+
+export const Outlined: Story = {
+  args: {
+    ...Default.args,
+    variant: 'outlined',
+    animated: false,
+  },
+};
+
+export const Ghost: Story = {
+  args: {
+    ...Default.args,
+    variant: 'ghost',
+  },
+};
+
+export const NoAnimation: Story = {
+  args: {
+    ...Default.args,
+    animated: false,
   },
 };

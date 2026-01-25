@@ -1,7 +1,7 @@
 import { IterationCw, RotateCcw, ShoppingCart } from 'lucide-react';
 import { ProductCondition } from '@/types/enums';
 import { Button } from '../Button';
-import clsx from 'clsx';
+import { cn } from '@/utils';
 
 export interface FrontSideProps {
   isFlipped: boolean;
@@ -80,7 +80,7 @@ export default function CardFrontSide({
 
   return (
     <div
-      className={clsx(
+      className={cn(
         // CSS Global Classes
         'card-flip-front',
         // Colors and Styles
@@ -98,10 +98,38 @@ export default function CardFrontSide({
       )}
     >
       {/* Image Container */}
-      <figure className="relative aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 dark:from-stone-700 dark:to-stone-800 overflow-hidden">
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-300 pointer-events-none z-[1]" />
+      <figure
+        className={cn(
+          'relative',
+          'aspect-[4/3]',
+          'bg-gradient-to-br from-gray-100 to-gray-50',
+          'dark:from-stone-700 dark:to-stone-800',
+          'overflow-hidden'
+        )}
+      >
+        <div
+          className={cn(
+            'absolute inset-0',
+            'opacity-0',
+            'group-hover:opacity-100',
+            'bg-gradient-to-t from-black/20 to-transparent',
+            'transition-opacity',
+            'duration-300',
+            'pointer-events-none',
+            'z-[1]'
+          )}
+        />
 
-        <div className="relative w-full h-full group-hover:scale-105 transition-transform duration-500">
+        <div
+          className={cn(
+            'relative',
+            'w-full',
+            'h-full',
+            'group-hover:scale-105',
+            'transition-transform',
+            'duration-500'
+          )}
+        >
           {productImage ? productImage : fallbackImage}
         </div>
 
@@ -109,14 +137,46 @@ export default function CardFrontSide({
         {isStoreProduct ? (
           hasOffer ? (
             <span
-              className={`absolute bottom-2 left-2 bg-red-500 text-white backdrop-blur-md text-[10px] font-semibold px-2.5 py-1 rounded-lg shadow-md border border-white/50 dark:border-stone-700/50`}
+              className={cn(
+                'absolute',
+                'bottom-2',
+                'left-2',
+                'bg-red-500',
+                'text-white',
+                'backdrop-blur-md',
+                'text-[10px]',
+                'font-semibold',
+                'px-2.5',
+                'py-1',
+                'rounded-lg',
+                'shadow-md',
+                'border',
+                'border-white/50',
+                'dark:border-stone-700/50'
+              )}
             >
               {offerLabel}
             </span>
           ) : null
         ) : (
           <span
-            className={`absolute bottom-2 left-2 ${getConditionColor(productCondition)} backdrop-blur-md text-[10px] font-semibold px-2.5 py-1 rounded-lg capitalize shadow-md border border-white/50 dark:border-stone-700/50`}
+            className={cn(
+              'absolute',
+              'bottom-2',
+              'left-2',
+              getConditionColor(productCondition),
+              'backdrop-blur-md',
+              'text-[10px]',
+              'font-semibold',
+              'px-2.5',
+              'py-1',
+              'rounded-lg',
+              'capitalize',
+              'shadow-md',
+              'border',
+              'border-white/50',
+              'dark:border-stone-700/50'
+            )}
           >
             {productCondition}
           </span>
@@ -128,7 +188,29 @@ export default function CardFrontSide({
             e.stopPropagation();
             setIsFlipped(!isFlipped);
           }}
-          className="absolute top-2 right-2 bg-white/90 dark:bg-stone-800/90 hover:bg-primary dark:hover:bg-primary text-gray-700 dark:text-stone-200 hover:text-white p-1.5 rounded-lg shadow-lg transition-all duration-200 hover:scale-110 backdrop-blur-sm border border-gray-200/50 dark:border-stone-600/50 z-[2]"
+          className={cn(
+            'absolute',
+            'top-2',
+            'right-2',
+            'bg-white/90',
+            'dark:bg-stone-800/90',
+            'hover:bg-primary',
+            'dark:hover:bg-primary',
+            'text-gray-700',
+            'dark:text-stone-200',
+            'hover:text-white',
+            'p-1.5',
+            'rounded-lg',
+            'shadow-lg',
+            'transition-all',
+            'duration-200',
+            'hover:scale-110',
+            'backdrop-blur-sm',
+            'border',
+            'border-gray-200/50',
+            'dark:border-stone-600/50',
+            'z-[2]'
+          )}
           aria-label="Ver impacto ambiental"
         >
           <RotateCcw className="w-3.5 h-3.5" />
@@ -138,29 +220,86 @@ export default function CardFrontSide({
       {/* Content - Compacto y limpio */}
       <div className="p-3.5" onClick={onCardClick}>
         {/* Header */}
-        <header className="flex items-center justify-between gap-2 mb-2">
-          <span className="text-gray-500 dark:text-stone-400 text-[10px] font-medium uppercase tracking-wide truncate">
+        <header
+          className={cn(
+            'flex',
+            'items-center',
+            'justify-between',
+            'gap-2',
+            'mb-2'
+          )}
+        >
+          <span
+            className={cn(
+              'text-gray-500',
+              'dark:text-stone-400',
+              'text-[10px]',
+              'font-medium',
+              'uppercase',
+              'tracking-wide',
+              'truncate'
+            )}
+          >
             {brand}
           </span>
           {color && (
-            <span className="text-gray-400 dark:text-stone-500 text-[10px] font-medium truncate max-w-[60px]">
+            <span
+              className={cn(
+                'text-gray-400',
+                'dark:text-stone-500',
+                'text-[10px]',
+                'font-medium',
+                'truncate',
+                'max-w-[60px]'
+              )}
+            >
               {color}
             </span>
           )}
         </header>
 
         {/* Product Name */}
-        <h3 className="font-semibold text-sm text-gray-900 dark:text-stone-50 line-clamp-1 mb-1.5 group-hover:text-primary dark:group-hover:text-primary-hover transition-colors duration-200">
+        <h3
+          className={cn(
+            'font-semibold',
+            'text-sm',
+            'text-gray-900',
+            'dark:text-stone-50',
+            'line-clamp-1',
+            'mb-1.5',
+            'group-hover:text-primary',
+            'dark:group-hover:text-primary-hover',
+            'transition-colors',
+            'duration-200'
+          )}
+        >
           {name}
         </h3>
 
         {/* Description */}
-        <p className="text-gray-600 dark:text-stone-400 text-xs line-clamp-1 mb-3 leading-relaxed">
+        <p
+          className={cn(
+            'text-gray-600',
+            'dark:text-stone-400',
+            'text-xs',
+            'line-clamp-1',
+            'mb-3',
+            'leading-relaxed'
+          )}
+        >
           {description}
         </p>
 
         {/* Footer */}
-        <footer className="flex flex-col items-start justify-between gap-2">
+        <footer
+          className={cn(
+            'flex',
+            'flex-col',
+            'items-start',
+            'justify-between',
+            'gap-2'
+          )}
+        >
           {isStoreProduct && hasOffer && !isExchangeable && (
             <div className="flex items-center justify-center gap-1">
               <span className="text-primary dark:text-primary-hover font-bold text-xl">
@@ -178,7 +317,20 @@ export default function CardFrontSide({
           )}
           {isExchangeable && interests && (
             <div
-              className="flex items-center gap-2 mb-2 overflow-x-auto scroll-smooth snap-x snap-mandatory px-3 flex-nowrap w-full scrollbar-hide"
+              className={cn(
+                'flex',
+                'items-center',
+                'gap-2',
+                'mb-2',
+                'overflow-x-auto',
+                'scroll-smooth',
+                'snap-x',
+                'snap-mandatory',
+                'px-3',
+                'flex-nowrap',
+                'w-full',
+                'scrollbar-hide'
+              )}
               style={{ WebkitOverflowScrolling: 'touch' }}
               tabIndex={0}
               role="list"
@@ -188,7 +340,22 @@ export default function CardFrontSide({
                 <span
                   key={index}
                   role="listitem"
-                  className="inline-flex items-center flex-shrink-0 snap-start text-[10px] whitespace-nowrap px-2 py-1 rounded-full bg-gray-100 dark:bg-stone-700 text-gray-800 dark:text-stone-100 font-medium"
+                  className={cn(
+                    'inline-flex',
+                    'items-center',
+                    'flex-shrink-0',
+                    'snap-start',
+                    'text-[10px]',
+                    'whitespace-nowrap',
+                    'px-2',
+                    'py-1',
+                    'rounded-full',
+                    'bg-gray-100',
+                    'dark:bg-stone-700',
+                    'text-gray-800',
+                    'dark:text-stone-100',
+                    'font-medium'
+                  )}
                 >
                   {interest}
                 </span>

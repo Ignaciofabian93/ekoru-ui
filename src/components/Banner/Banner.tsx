@@ -103,12 +103,21 @@ const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
               repeat: Infinity,
               ease: 'linear',
             }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+            className={cn(
+              'absolute inset-0',
+              'bg-gradient-to-r from-transparent via-white/10 to-transparent'
+            )}
           />
         )}
 
-        <div className="relative z-10">
-          <div className="flex flex-1 justify-center items-center gap-2 md:gap-3 mb-3">
+        <motion.div className="relative z-10">
+          <motion.div
+            className={cn(
+              'flex flex-1 justify-center items-center',
+              'gap-2 md:gap-3',
+              'mb-3'
+            )}
+          >
             {showDots && (
               <motion.span
                 initial={{ scale: 0 }}
@@ -123,7 +132,12 @@ const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="text-base sm:text-lg md:text-2xl font-bold text-center tracking-tight"
+              className={cn(
+                'text-base sm:text-lg md:text-2xl',
+                'font-bold',
+                'text-center',
+                'tracking-tight'
+              )}
             >
               {title}
             </motion.h2>
@@ -136,17 +150,22 @@ const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
                 className={cn(dotVariants({ variant }))}
               />
             )}
-          </div>
+          </motion.div>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5 }}
-            className="text-sm sm:text-base md:text-lg text-center leading-snug md:leading-normal font-light"
+            className={cn(
+              'text-sm sm:text-base md:text-lg',
+              'text-center',
+              'leading-snug md:leading-normal',
+              'font-light'
+            )}
           >
             {description}
           </motion.p>
-        </div>
+        </motion.div>
       </MotionDiv>
     );
   }

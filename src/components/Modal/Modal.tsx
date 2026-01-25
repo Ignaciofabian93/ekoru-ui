@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../../utils';
+import { cn } from '@/utils';
 
 const modalVariants = cva(
   'relative w-full max-h-[90vh] rounded-lg shadow-2xl overflow-hidden z-10',
@@ -80,7 +80,11 @@ export default function Modal({
         <motion.div
           key="modal"
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          className={cn(
+            'fixed inset-0 z-[9999]',
+            'flex items-center justify-center',
+            'p-4'
+          )}
           role="dialog"
           aria-modal="true"
           aria-labelledby={title ? 'modal-title' : undefined}
@@ -90,7 +94,11 @@ export default function Modal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className={cn(
+              'absolute inset-0',
+              'bg-black/60',
+              'backdrop-blur-sm'
+            )}
             onClick={closeOnOverlayClick ? onClose : undefined}
             aria-label="Close modal"
           />
@@ -114,7 +122,13 @@ export default function Modal({
           >
             {/* Header */}
             {(title || showCloseButton) && (
-              <div className="flex items-center justify-between p-6 border-b border-border">
+              <div
+                className={cn(
+                  'flex items-center justify-between',
+                  'p-6',
+                  'border-b border-border'
+                )}
+              >
                 {title && (
                   <h3
                     id="modal-title"
@@ -126,7 +140,11 @@ export default function Modal({
                 {showCloseButton && (
                   <button
                     onClick={onClose}
-                    className="p-1 rounded-lg text-foreground-secondary hover:text-foreground hover:bg-background-secondary transition-colors"
+                    className={cn(
+                      'p-1 rounded-lg text-foreground-secondary',
+                      'hover:text-foreground hover:bg-background-secondary',
+                      'transition-colors'
+                    )}
                     aria-label="Close modal"
                   >
                     <X className="h-5 w-5" />
@@ -136,7 +154,15 @@ export default function Modal({
             )}
 
             {/* Body */}
-            <div className="p-6 overflow-y-auto max-h-[calc(90vh-8rem)] scrollbar-hide text-foreground">
+            <div
+              className={cn(
+                'p-6',
+                'overflow-y-auto',
+                'max-h-[calc(90vh-8rem)]',
+                'scrollbar-hide',
+                'text-foreground'
+              )}
+            >
               {children}
             </div>
           </motion.div>

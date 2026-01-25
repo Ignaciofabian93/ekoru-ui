@@ -10,6 +10,7 @@ import {
   type StoreProductMaterial,
 } from '@/types/product';
 import { type PersonProfile } from '@/types/seller';
+import { cn } from '@/utils';
 
 export interface ProductCardProps {
   product: Partial<MarketplaceProduct> | Partial<StoreProduct>;
@@ -39,9 +40,16 @@ export default function ProductCard({ product }: ProductCardProps) {
     | undefined;
 
   return (
-    <article className="flex-shrink-0 w-[220px] h-[350px] card-flip-perspective">
+    <article
+      className={cn(
+        'flex-shrink-0',
+        'w-[220px]',
+        'h-[350px]',
+        'card-flip-perspective'
+      )}
+    >
       <div
-        className={`card-flip-inner ${isFlipped ? 'card-flip-flipped' : ''}`}
+        className={cn('card-flip-inner', isFlipped ? 'card-flip-flipped' : '')}
       >
         {/* Front Side - Product Info */}
         <CardFrontSide

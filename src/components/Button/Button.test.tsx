@@ -36,6 +36,13 @@ describe('Button', () => {
     expect(screen.getByRole('button')).toHaveClass('border-2');
   });
 
+  it('applies secondary_outline variant correctly', () => {
+    render(<Button variant="secondary_outline">Secondary Outline</Button>);
+    const btn = screen.getByRole('button');
+    expect(btn).toHaveClass('border-2');
+    expect(btn).toHaveClass('text-secondary');
+  });
+
   it('applies different sizes', () => {
     const { rerender } = render(<Button size="sm">Small</Button>);
     expect(screen.getByRole('button')).toHaveClass('min-h-[36px]');

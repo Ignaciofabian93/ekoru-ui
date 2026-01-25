@@ -1,5 +1,6 @@
+import { cn } from '@/utils';
 import { Image } from 'lucide-react';
-
+import { motion } from 'motion/react';
 export interface CardProps {
   title: string;
   description?: string;
@@ -22,36 +23,74 @@ export default function Card({
   textColor = 'text-white',
 }: CardProps) {
   return (
-    <article className="w-64 bg-white rounded-lg overflow-hidden shadow-md relative">
-      <div className="h-40 w-full overflow-hidden">
+    <motion.article
+      className={cn(
+        'w-64',
+        'bg-white',
+        'rounded-lg',
+        'overflow-hidden',
+        'shadow-md',
+        'relative'
+      )}
+    >
+      <motion.div className="h-40 w-full overflow-hidden">
         {image ? (
           image
         ) : (
-          <div className="h-40 w-full bg-gray-200 flex items-center justify-center">
-            <span className="text-gray-500">
+          <motion.div
+            className={cn(
+              'h-40 w-full',
+              'bg-gray-200',
+              'flex items-center justify-center'
+            )}
+          >
+            <motion.span className="text-gray-500">
               <Image />
-            </span>
-          </div>
+            </motion.span>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
       {hasBadge && badgeText && (
-        <div
-          className={`absolute top-2 left-2 ${badgeColor} ${textColor} text-xs font-semibold px-4 py-1 rounded-lg shadow-md`}
+        <motion.div
+          className={cn(
+            'absolute top-2 left-2',
+            'text-xs',
+            'font-semibold',
+            'px-4 py-1',
+            'rounded-lg',
+            'shadow-md',
+            badgeColor,
+            textColor
+          )}
         >
           {badgeText}
-        </div>
+        </motion.div>
       )}
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-stone-100">
+      <motion.div className="p-4">
+        <motion.h3
+          className={cn(
+            'text-lg',
+            'font-semibold',
+            'text-gray-900',
+            'dark:text-stone-100'
+          )}
+        >
           {title}
-        </h3>
+        </motion.h3>
         {description && (
-          <p className="text-sm text-gray-600 dark:text-stone-400 mt-2">
+          <motion.p
+            className={cn(
+              'text-sm',
+              'text-gray-600',
+              'dark:text-stone-400',
+              'mt-2'
+            )}
+          >
             {description}
-          </p>
+          </motion.p>
         )}
-        {cta && <div className="mt-2">{cta}</div>}
-      </div>
-    </article>
+        {cta && <motion.div className="mt-2">{cta}</motion.div>}
+      </motion.div>
+    </motion.article>
   );
 }
