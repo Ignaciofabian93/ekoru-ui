@@ -1,32 +1,41 @@
 # @ekoru/ui
 
-> Professional React component library for the Ekoru sustainable marketplace ecosystem.
+> Internal design system and React component library for the Ekoru ecosystem.
 
 [![npm version](https://img.shields.io/npm/v/@ekoru/ui.svg)](https://www.npmjs.com/package/@ekoru/ui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![codecov](https://codecov.io/gh/Ignaciofabian93/ekoru-ui/branch/main/graph/badge.svg)](https://codecov.io/gh/Ignaciofabian93/ekoru-ui)
 
 ## 🌱 About
 
-Ekoru UI is a comprehensive design system built with sustainability and user experience in mind. It provides a set of accessible, customizable, and beautiful React components for building modern web applications.
+Ekoru UI is an internal design system built specifically for Ekoru's product ecosystem. It ensures consistent branding, user experience, and maintainability across all Ekoru platforms with sustainability-focused components and design patterns.
+
+### Used In
+
+- **[www.ekoru.cl](https://www.ekoru.cl)** - Marketing and informational website
+- **[app.ekoru.cl](https://app.ekoru.cl)** - E-commerce platform (in development)
+- **[admin.ekoru.cl](https://admin.ekoru.cl)** - Admin dashboard (in development)
+- Future Ekoru products
 
 ## ✨ Features
 
-- 🎨 **Beautiful Design** - Carefully crafted components with a sustainable aesthetic
-- ♿ **Accessible** - WCAG 2.1 compliant components
-- 🎯 **TypeScript** - Full type safety out of the box
-- 🎭 **Customizable** - Easy theming with Tailwind CSS
-- 📦 **Tree-shakeable** - Only bundle what you use
+- 🎨 **Ekoru Branding** - Custom design system with Ekoru's sustainable aesthetic
+- 🌍 **Sustainability-focused** - Components like Environmental Impact Modal, Product Impact Cards
+- ♿ **Accessible** - WCAG 2.1 compliant
+- 🎯 **TypeScript** - Full type safety
+- 🎭 **Customizable** - Built on Tailwind CSS
+- 📦 **Tree-shakeable** - Optimized bundle size
 - 🧪 **Well tested** - Comprehensive test coverage
-- 📚 **Documented** - Storybook documentation for all components
+- 📚 **Documented** - Storybook for all components
+
+## 🚨 Note for External Developers
+
+This library is **internal to Ekoru** and contains branding-specific components and styling. While it's published as open source, it's designed specifically for Ekoru products and may not be suitable for external projects.
 
 ## 📦 Installation
 
 ```bash
-npm install @ekoru/ui
-# or
 pnpm add @ekoru/ui
-# or
-yarn add @ekoru/ui
 ```
 
 ## 🚀 Quick Start
@@ -38,7 +47,7 @@ import '@ekoru/ui/styles';
 export default function App() {
   return (
     <Button variant="primary" onClick={() => console.log('clicked')}>
-      Click me
+      Shop Sustainable
     </Button>
   );
 }
@@ -48,34 +57,60 @@ export default function App() {
 
 ### Importing Styles
 
-Make sure to import the styles in your main app file:
+Import styles in your root file:
 
 ```tsx
-// app.tsx or main.tsx
+// app.tsx or layout.tsx
 import '@ekoru/ui/styles';
 ```
 
-### Using Components
+### Basic Example
 
 ```tsx
-import { Button, Card, Input } from '@ekoru/ui';
+import { Button, Card, Input, ProductCard } from '@ekoru/ui';
 
-function MyComponent() {
+function CheckoutPage() {
   return (
-    <Card>
-      <h2>Welcome to Ekoru</h2>
-      <Input placeholder="Enter your email" />
-      <Button variant="primary" size="lg">
-        Get Started
-      </Button>
-    </Card>
+    <div>
+      <ProductCard
+        name="Eco Water Bottle"
+        price={25000}
+        image="/products/bottle.jpg"
+        environmentalImpact={{
+          co2Saved: 2.5,
+          waterSaved: 150,
+          treesPlanted: 1,
+        }}
+      />
+      <Card>
+        <Input label="Email" placeholder="your@email.com" />
+        <Button variant="primary" size="lg" fullWidth>
+          Complete Purchase
+        </Button>
+      </Card>
+    </div>
+  );
+}
+```
+
+### Using with Next.js
+
+```tsx
+// Next.js App Router (app/layout.tsx)
+import '@ekoru/ui/styles';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="es">
+      <body>{children}</body>
+    </html>
   );
 }
 ```
 
 ### Customizing Theme
 
-You can customize the theme by extending your Tailwind config:
+Extend the Ekoru theme in your Tailwind config:
 
 ```js
 // tailwind.config.js
@@ -87,54 +122,53 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          // Your custom colors
-        },
+        // Ekoru brand colors are already included
+        // Add custom extensions if needed
       },
     },
   },
 };
 ```
 
-## 🎨 Components
+## 🎨 Component Categories
 
-### Button
+### Core Components
 
-A versatile button component with multiple variants and sizes.
+General-purpose UI components used across all platforms.
 
-```tsx
-<Button variant="primary" size="md" isLoading={false}>
-  Click me
-</Button>
-```
+- **Button** - Primary actions with variants
+- **Input** - Form inputs with validation
+- **Card** - Content containers
+- **Modal** - Dialogs and overlays
+- **Select** - Dropdown selections
+- **Textarea** - Multi-line text inputs
+- **Checkbox** - Boolean inputs
 
-**Variants:** `primary` | `secondary` | `outline` | `ghost` | `success` | `warning` | `error`
+### Ekoru-Specific Components
 
-**Sizes:** `sm` | `md` | `lg`
+Custom components for Ekoru's unique features.
 
-### More components coming soon!
+- **ProductCard** - E-commerce product display with impact metrics
+- **EnvironmentalImpactModal** - Sustainability impact visualization
+- **HeroCarousel** - Homepage banner carousel
 
-- Input
-- Card
-- Modal
-- Select
-- Checkbox
-- Radio
-- Toast
-- And many more...
+### Layout Components
+
+- **Navbar** - Navigation headers
+- **Footer** - Page footers
 
 ## 🛠️ Development
 
 ### Prerequisites
 
-- Node.js >= 18
-- pnpm >= 8
+- Node.js >= 20
+- pnpm >= 9
 
 ### Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/ekoru/ekoru-ui.git
+git clone https://github.com/Ignaciofabian93/ekoru-ui.git
 cd ekoru-ui
 
 # Install dependencies
@@ -146,10 +180,7 @@ pnpm storybook
 # Run tests
 pnpm test
 
-# Run tests in watch mode
-pnpm test:watch
-
-# Build the library
+# Build
 pnpm build
 ```
 
@@ -158,94 +189,117 @@ pnpm build
 ```
 ekoru-ui/
 ├── src/
-│   ├── components/      # React components
-│   ├── utils/           # Utility functions
-│   ├── styles/          # Global styles
-│   └── index.ts         # Main entry point
-├── test/                # Test utilities
-├── .storybook/          # Storybook configuration
-└── dist/                # Build output (generated)
+│   ├── components/          # React components
+│   │   ├── Button/
+│   │   ├── ProductCard/
+│   │   └── ...
+│   ├── utils/               # Utilities
+│   ├── styles/              # Global styles
+│   └── index.ts             # Main export
+├── test/                    # Test setup
+├── .storybook/              # Storybook config
+└── .changeset/              # Changesets
 ```
 
-### Creating a New Component
+### Scripts
 
-1. Create component folder in `src/components/`
-2. Create component file: `ComponentName.tsx`
-3. Create test file: `ComponentName.test.tsx`
-4. Create stories file: `ComponentName.stories.tsx`
-5. Export from `index.ts`
+| Command              | Description              |
+| -------------------- | ------------------------ |
+| `pnpm dev`           | Start development mode   |
+| `pnpm build`         | Build for production     |
+| `pnpm test`          | Run tests                |
+| `pnpm test:watch`    | Run tests in watch mode  |
+| `pnpm test:coverage` | Generate coverage report |
+| `pnpm storybook`     | Start Storybook          |
+| `pnpm lint`          | Lint code                |
+| `pnpm type-check`    | Check TypeScript types   |
+| `pnpm changeset`     | Create a changeset       |
 
-Example:
+## 🔄 Release Workflow
 
-```tsx
-// src/components/MyComponent/MyComponent.tsx
-import { cn } from '@/utils/cn';
+We use [Changesets](https://github.com/changesets/changesets) for automated versioning and publishing.
 
-export interface MyComponentProps {
-  className?: string;
-  children: React.ReactNode;
-}
+### Making Changes
 
-export const MyComponent = ({ className, children }: MyComponentProps) => {
-  return <div className={cn('my-component', className)}>{children}</div>;
-};
+1. Create a feature branch
+
+```bash
+   git checkout -b feature/new-component
 ```
 
-### Running Tests
+2. Make your changes
+
+3. Create a changeset
+
+```bash
+   pnpm changeset
+```
+
+- Select change type: `patch` / `minor` / `major`
+- Write a clear description
+
+4. Commit and push
+
+```bash
+   git add .
+   git commit -m "feat: add ProductCard component"
+   git push
+```
+
+5. GitHub Actions will:
+   - Run tests and builds
+   - Create a Version PR when merged to `main`
+   - Auto-publish to npm when Version PR is merged
+
+📖 **See [CHANGESETS.md](./docs/CHANGESETS.md) for detailed workflow guide**
+
+## 🤝 Contributing
+
+This is an internal project for Ekoru team members. If you're part of the team:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests: `pnpm test`
+5. Create a changeset: `pnpm changeset`
+6. Open a Pull Request
+
+### Contribution Guidelines
+
+- Write tests for new components
+- Update Storybook stories
+- Follow the existing code style
+- Keep components accessible (WCAG 2.1)
+- Use TypeScript strictly
+- Document props and usage
+
+## 📚 Documentation
+
+- **Storybook**: Component documentation and playground
+- **Changesets**: [CHANGESETS.md](./CHANGESETS.md) - Release workflow guide
+- **TypeScript**: Full type definitions included
+
+## 🧪 Testing
 
 ```bash
 # Run all tests
 pnpm test
 
-# Run tests in watch mode
+# Watch mode
 pnpm test:watch
 
-# Generate coverage report
+# Coverage report
 pnpm test:coverage
 
-# Run tests with UI
+# UI mode
 pnpm test:ui
 ```
 
-### Building
+We use:
 
-```bash
-# Build for production
-pnpm build
-
-# Build CSS
-pnpm build:css
-
-# Type check
-pnpm type-check
-```
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Workflow
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-feature`
-3. Make your changes
-4. Run tests: `pnpm test`
-5. Create a changeset: `pnpm changeset`
-6. Commit your changes: `git commit -m "feat: add new feature"`
-7. Push to your fork: `git push origin feature/my-feature`
-8. Open a Pull Request
-
-## 📝 Versioning
-
-We use [Changesets](https://github.com/changesets/changesets) for version management.
-
-To create a changeset:
-
-```bash
-pnpm changeset
-```
-
-Follow the prompts to describe your changes.
+- **Vitest** for unit testing
+- **React Testing Library** for component testing
+- **Codecov** for coverage tracking
 
 ## 📄 License
 
@@ -253,20 +307,19 @@ MIT © [Ekoru](https://ekoru.cl)
 
 ## 🌐 Links
 
-- [Documentation](https://ui.ekoru.cl)
-- [Storybook](https://storybook.ekoru.cl)
-- [GitHub](https://github.com/ekoru/ekoru-ui)
-- [npm](https://www.npmjs.com/package/@ekoru/ui)
+- [GitHub Repository](https://github.com/Ignaciofabian93/ekoru-ui)
+- [npm Package](https://www.npmjs.com/package/@ekoru/ui)
+- [Ekoru Website](https://www.ekoru.cl)
+- [Ekoru Platform](https://app.ekoru.cl)
 
-## 💚 Support
+## 📞 Internal Support
 
-If you like this project, please consider:
+For Ekoru team members:
 
-- ⭐ Starring the repository
-- 🐛 Reporting bugs
-- 💡 Suggesting new features
-- 🤝 Contributing to the codebase
+- Slack: `#ekoru-ui` channel
+- Issues: [GitHub Issues](https://github.com/Ignaciofabian93/ekoru-ui/issues)
+- Lead: Ignacio Rodriguez (ignaciorodriguez@ekoru.cl)
 
 ---
 
-Made with 💚 by the Ekoru team for a more sustainable future.
+Built with 💚 by the Ekoru team for a sustainable future.
