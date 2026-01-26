@@ -1,9 +1,4 @@
-import {
-  useEffect,
-  useState,
-  type ComponentType,
-  type ImgHTMLAttributes,
-} from 'react';
+import { useEffect, useState, type ComponentType } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface HeroCarouselProps {
@@ -15,15 +10,14 @@ export interface HeroCarouselProps {
     image: string;
     bgColor: string;
   }[];
-  ImageComponent?: ComponentType<
-    ImgHTMLAttributes<HTMLImageElement> & {
-      src: string;
-      alt: string;
-      width?: number;
-      height?: number;
-      priority?: boolean;
-    }
-  >;
+  ImageComponent?: ComponentType<{
+    src: string;
+    alt: string;
+    width?: number;
+    height?: number;
+    priority?: boolean;
+    className?: string;
+  }>;
   autoScrollInterval?: number;
 }
 
@@ -112,7 +106,9 @@ export default function HeroCarousel({
                           width={320}
                           height={320}
                           className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-36 lg:h-36 xl:w-40 xl:h-40 object-contain"
-                          {...(ImageComponent ? { priority: index === 0 } : {})}
+                          {...(ImageComponent && index === 0
+                            ? { priority: true }
+                            : {})}
                         />
                       </div>
                     </div>
