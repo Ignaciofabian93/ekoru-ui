@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Loader2 } from 'lucide-react';
 
 const buttonVariants = cva(
-  'btn disabled:pointer-events-none disabled:opacity-50',
+  'min-w-[140px] rounded-lg font-medium shadow-md transition-all duration-200 flex items-center justify-center space-x-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {

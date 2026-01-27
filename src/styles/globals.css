@@ -204,18 +204,6 @@
   }
 }
 
-@layer components {
-  .btn {
-    @apply min-w-[140px]
-           rounded-lg 
-           font-medium 
-           shadow-md 
-           transition-all duration-200
-           flex items-center justify-center 
-           space-x-2;
-  }
-}
-
 @layer utilities {
   /* Hide scrollbar but keep functionality */
   .scrollbar-hide {
