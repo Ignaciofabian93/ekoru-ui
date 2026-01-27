@@ -1,17 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, Search, X } from 'lucide-react';
 import { cn } from '@/utils';
 
+export interface NavigationLinkProps {
+  id: string;
+  label: string;
+  isAnchor?: boolean;
+  href?: string;
+}
+
+export interface MobileNavigationLinkProps {
+  title: string;
+  links: NavigationLinkProps[];
+}
+[];
+
 export interface NavbarProps {
   brand?: React.ReactNode;
-  navigationIcons?: React.ReactNode;
-  navigationLinks?: React.ReactNode;
+  // informational website
+  navigationLinks?: NavigationLinkProps[];
+  // informational website mobile menu
+  mobileMenuNavigationLinks?: MobileNavigationLinkProps[];
+  // app links
+  appNavigationItems?: React.ReactNode;
+  // app mobile menu
+  mobileMenuAppNavigationItems?: React.ReactNode;
+  // search
   searchPlaceholder?: string;
   onSearch?: (query: string) => void;
-  mobileMenuContent?: React.ReactNode;
-  className?: string;
   searchEnabled?: boolean;
+  // styles
+  className?: string;
+  // side menu title
   sideMenuTitle?: string;
 
   // Aria labels and other accessibility props can be added as needed
@@ -23,12 +44,13 @@ export interface NavbarProps {
 }
 
 export default function Navbar({
-  navigationIcons,
-  navigationLinks,
   brand,
+  navigationLinks,
+  mobileMenuNavigationLinks,
+  appNavigationItems,
+  mobileMenuAppNavigationItems,
   searchPlaceholder = 'Search...',
   onSearch,
-  mobileMenuContent,
   className = '',
   searchEnabled = true,
   sideMenuTitle = 'Menu',
@@ -42,6 +64,28 @@ export default function Navbar({
 }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [activeSection, setActiveSection] = useState('');
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    navigationLinks?.forEach(({ id }) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
@@ -59,6 +103,16 @@ export default function Navbar({
     if (event.key === 'Escape' && isMobileMenuOpen) {
       setIsMobileMenuOpen(false);
     }
+  };
+
+  const handleScrollToSection = (sectionId: string) => {
+    setIsMobileMenuOpen(false);
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 200);
   };
 
   return (
@@ -128,12 +182,42 @@ export default function Navbar({
               role="toolbar"
               aria-label={userActionsAriaLabel}
             >
-              {/* Navigation Icons */}
-              {navigationIcons}
+              {/* Navigation Icons - App */}
+              {appNavigationItems}
 
               {/* Navigation Links - Desktop */}
               <div className="hidden lg:flex items-center space-x-2">
-                {navigationLinks}
+                {navigationLinks &&
+                  navigationLinks.map((item, index) => (
+                    <motion.a
+                      key={item.id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                      href={`#${item.id}`}
+                      className={cn(
+                        'relative',
+                        'text-white',
+                        'transition-all duration-200 ease-in-out',
+                        'font-medium text-sm',
+                        'group',
+                        {
+                          'text-secondary': activeSection === item.id,
+                        }
+                      )}
+                    >
+                      {item.label}
+                      <motion.span
+                        initial={{ scaleX: 0 }}
+                        animate={{
+                          scaleX: activeSection === item.id ? 1 : 0,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-light origin-left"
+                      />
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                    </motion.a>
+                  ))}
               </div>
 
               {/* Mobile Menu Button */}
@@ -229,12 +313,15 @@ export default function Navbar({
               <div className="p-6">
                 {/* Menu Header */}
                 <div className="flex items-center justify-between mb-6">
-                  <h2
+                  <motion.h2
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
                     id="mobile-menu-title"
                     className="text-xl font-semibold text-foreground"
                   >
                     {sideMenuTitle}
-                  </h2>
+                  </motion.h2>
                   <button
                     onClick={closeMobileMenu}
                     className={cn(
@@ -251,12 +338,59 @@ export default function Navbar({
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="space-y-2">{navigationLinks}</nav>
+                <nav className="space-y-2">{mobileMenuAppNavigationItems}</nav>
 
                 {/* Custom Mobile Menu Content */}
-                {mobileMenuContent && (
+                {mobileMenuNavigationLinks && (
                   <div className="mt-6 pt-6 border-t border-surface-active">
-                    {mobileMenuContent}
+                    {mobileMenuNavigationLinks.map((section, index) => (
+                      <div key={index} className="h-full overflow-y-auto pb-20">
+                        <div className="p-4 space-y-1">
+                          <motion.h3 className="text-sm font-semibold text-text-muted uppercase tracking-wide mb-3">
+                            {section.title}
+                          </motion.h3>
+                          {section.links.map(({ id, isAnchor, href, label }) =>
+                            isAnchor ? (
+                              <motion.a
+                                key={id}
+                                href={href || '#'}
+                                className={cn(
+                                  'w-full flex items-center justify-between',
+                                  'p-3',
+                                  'text-left',
+                                  'hover:bg-neutral-light/50',
+                                  'transition-colors',
+                                  'rounded-lg',
+                                  'border-b border-neutral/10'
+                                )}
+                              >
+                                <motion.span className="font-medium text-text-primary">
+                                  {label}
+                                </motion.span>
+                              </motion.a>
+                            ) : (
+                              <motion.button
+                                key={id}
+                                onClick={() => handleScrollToSection(id)}
+                                className={cn(
+                                  'w-full flex items-center justify-between',
+                                  'p-3',
+                                  'text-left',
+                                  'hover:bg-neutral-light/50',
+                                  'transition-colors',
+                                  'rounded-lg',
+                                  'border-b border-neutral/10'
+                                )}
+                              >
+                                <motion.span className="font-medium text-text-primary">
+                                  {label}
+                                </motion.span>
+                              </motion.button>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
