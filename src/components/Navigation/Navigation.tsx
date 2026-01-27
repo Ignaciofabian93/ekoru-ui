@@ -5,8 +5,8 @@ import { cn } from '@/utils';
 
 export interface NavbarProps {
   brand?: React.ReactNode;
-  navigationIcons?: Array<React.ReactNode>;
-  navigationLinks?: Array<React.ReactNode>;
+  navigationIcons?: React.ReactNode;
+  navigationLinks?: React.ReactNode;
   searchPlaceholder?: string;
   onSearch?: (query: string) => void;
   mobileMenuContent?: React.ReactNode;
@@ -64,7 +64,11 @@ export default function Navbar({
   return (
     <>
       <header
-        className={`navbar-container ${className}`}
+        className={cn(
+          'bg-gradient-to-r from-navbar-dark via-navbar-main to-navbar-dark',
+          'sticky top-0 z-50',
+          className
+        )}
         onKeyDown={handleKeyDown}
       >
         <nav

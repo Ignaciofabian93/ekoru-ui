@@ -56,9 +56,8 @@
     --navbar-hover: 190 242 100; /* lime-300 */
     --navbar-text: 255 255 255; /* white */
     --navbar-border: 229 231 235; /* gray-200 */
-    --navbar-gradient-from: 63 98 18; /* primary-dark */
-    --navbar-gradient-via: 101 163 13; /* primary */
-    --navbar-gradient-to: 63 98 18; /* primary-dark */
+    --navbar-dark: 63 98 18; /* primary-dark */
+    --navbar-main: 101 163 13; /* primary */
 
     /* Sidebar */
     --sidebar-bg: 249 250 251; /* gray-50 */
@@ -144,9 +143,8 @@
     --navbar-hover: 48 48 48; /* hover */
     --navbar-text: 253 255 252; /* white */
     --navbar-border: 68 68 68; /* border */
-    --navbar-gradient-from: 30 41 59; /* slate-800 */
-    --navbar-gradient-via: 51 65 85; /* slate-700 */
-    --navbar-gradient-to: 30 41 59; /* slate-800 */
+    --navbar-dark: 30 41 59; /* slate-800 */
+    --navbar-main: 51 65 85; /* slate-700 */
 
     /* Subheader */
     --subheader-bg: 60 60 60; /* dark bg */
@@ -207,10 +205,6 @@
 }
 
 @layer components {
-  .navbar-container {
-    @apply bg-gradient-to-r from-navbar-gradient-from via-navbar-gradient-via to-navbar-gradient-to
-           sticky top-0 z-50;
-  }
   .btn {
     @apply min-w-[140px]
            rounded-lg 

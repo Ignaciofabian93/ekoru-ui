@@ -28,9 +28,8 @@ module.exports = {
         ring: 'rgb(var(--border-focus))',
         background: 'rgb(var(--background))',
         foreground: 'rgb(var(--foreground))',
-        'navbar-gradient-from': 'rgb(var(--navbar-gradient-from))',
-        'navbar-gradient-via': 'rgb(var(--navbar-gradient-via))',
-        'navbar-gradient-to': 'rgb(var(--navbar-gradient-to))',
+        'navbar-dark': 'rgb(var(--navbar-dark))',
+        'navbar-main': 'rgb(var(--navbar-main))',
         primary: {
           DEFAULT: 'rgb(var(--primary))',
           dark: 'rgb(var(--primary-dark))',

@@ -42,6 +42,23 @@ const BrandLogo = () => (
   </a>
 );
 
+const demoLinks = [
+  { name: 'Home', href: '/', icon: Home },
+  { name: 'Products', href: '/products', icon: Package },
+  { name: 'Wishlist', href: '/wishlist', icon: Heart },
+];
+
+const demoLinksAsNodes = demoLinks.map((link) => (
+  <a
+    href={link.href}
+    key={link.name}
+    className="flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-colors"
+  >
+    {link.icon && <link.icon className="h-5 w-5" />}
+    <span>{link.name}</span>
+  </a>
+));
+
 // Sample navigation links as React nodes
 const sampleLinks = [
   <a
@@ -145,7 +162,7 @@ export const WithBrand: Story = {
 export const WithNavigationLinks: Story = {
   args: {
     brand: <BrandLogo />,
-    navigationLinks: sampleLinks,
+    navigationLinks: demoLinksAsNodes,
     searchPlaceholder: 'Search products...',
     onSearch: (query) => console.log('Search:', query),
   },
