@@ -48,71 +48,46 @@ const demoLinks = [
   { name: 'Wishlist', href: '/wishlist', icon: Heart },
 ];
 
-const demoLinksAsNodes = demoLinks.map((link) => (
-  <a
-    href={link.href}
-    key={link.name}
-    className="flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-colors"
-  >
-    {link.icon && <link.icon className="h-5 w-5" />}
-    <span>{link.name}</span>
-  </a>
-));
+// Navigation links as objects (new API)
+const demoNavLinks = demoLinks.map((l) => ({
+  id: l.name.toLowerCase(),
+  label: l.name,
+  href: l.href,
+}));
 
 // Sample navigation links as React nodes
-const sampleLinks = [
-  <a
-    key="home"
-    href="/"
-    className="flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-colors"
-  >
-    <Home className="h-5 w-5" />
-    <span>Home</span>
-  </a>,
-  <a
-    key="products"
-    href="/products"
-    className="flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-colors"
-  >
-    <Package className="h-5 w-5" />
-    <span>Products</span>
-  </a>,
-  <a
-    key="wishlist"
-    href="/wishlist"
-    className="flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-colors"
-  >
-    <Heart className="h-5 w-5" />
-    <span>Wishlist</span>
-  </a>,
+// sample navigation links as objects for the new `navigationLinks` prop
+const sampleNavLinks = [
+  { id: 'home', label: 'Home', href: '/' },
+  { id: 'products', label: 'Products', href: '/products' },
+  { id: 'wishlist', label: 'Wishlist', href: '/wishlist' },
 ];
 
 // Sample mobile navigation links
-const sampleMobileLinks = [
-  <a
-    key="home"
-    href="/"
-    className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-background-secondary transition-colors"
-  >
-    <Home className="h-5 w-5" />
-    <span>Home</span>
-  </a>,
-  <a
-    key="products"
-    href="/products"
-    className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-background-secondary transition-colors"
-  >
-    <Package className="h-5 w-5" />
-    <span>Products</span>
-  </a>,
-  <a
-    key="wishlist"
-    href="/wishlist"
-    className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-background-secondary transition-colors"
-  >
-    <Heart className="h-5 w-5" />
-    <span>Wishlist</span>
-  </a>,
+const sampleMobileSections = [
+  {
+    title: 'Categories',
+    links: [
+      {
+        id: 'electronics',
+        label: 'Electronics',
+        href: '/category/electronics',
+        isAnchor: true,
+      },
+      {
+        id: 'clothing',
+        label: 'Clothing',
+        href: '/category/clothing',
+        isAnchor: true,
+      },
+      {
+        id: 'home-garden',
+        label: 'Home & Garden',
+        href: '/category/home',
+        isAnchor: true,
+      },
+    ],
+  },
 ];
 
 // Sample navigation icons
@@ -162,7 +137,7 @@ export const WithBrand: Story = {
 export const WithNavigationLinks: Story = {
   args: {
     brand: <BrandLogo />,
-    navigationLinks: demoLinksAsNodes,
+    navigationLinks: demoNavLinks,
     searchPlaceholder: 'Search products...',
     onSearch: (query) => console.log('Search:', query),
   },
@@ -171,7 +146,7 @@ export const WithNavigationLinks: Story = {
 export const WithNavigationIcons: Story = {
   args: {
     brand: <BrandLogo />,
-    navigationIcons: sampleIcons,
+    appNavigationItems: sampleIcons,
     searchPlaceholder: 'Search products...',
     onSearch: (query) => console.log('Search:', query),
   },
@@ -180,47 +155,8 @@ export const WithNavigationIcons: Story = {
 export const WithMobileMenuContent: Story = {
   args: {
     brand: <BrandLogo />,
-    navigationLinks: sampleMobileLinks,
-    mobileMenuContent: (
-      <div className="space-y-4">
-        <div>
-          <h3 className="text-sm font-semibold text-foreground-secondary mb-2">
-            Categories
-          </h3>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="/category/electronics"
-                className="block px-4 py-2 text-foreground hover:bg-background-secondary rounded-lg transition-colors"
-              >
-                Electronics
-              </a>
-            </li>
-            <li>
-              <a
-                href="/category/clothing"
-                className="block px-4 py-2 text-foreground hover:bg-background-secondary rounded-lg transition-colors"
-              >
-                Clothing
-              </a>
-            </li>
-            <li>
-              <a
-                href="/category/home"
-                className="block px-4 py-2 text-foreground hover:bg-background-secondary rounded-lg transition-colors"
-              >
-                Home & Garden
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="pt-4 border-t border-surface-active">
-          <button className="w-full px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors">
-            Sign Out
-          </button>
-        </div>
-      </div>
-    ),
+    navigationLinks: demoNavLinks,
+    mobileMenuNavigationLinks: sampleMobileSections,
     searchPlaceholder: 'Search products...',
     onSearch: (query) => console.log('Search:', query),
   },
@@ -229,56 +165,32 @@ export const WithMobileMenuContent: Story = {
 export const FullFeatured: Story = {
   args: {
     brand: <BrandLogo />,
-    navigationIcons: sampleIcons,
-    navigationLinks: sampleLinks,
+    appNavigationItems: sampleIcons,
+    navigationLinks: sampleNavLinks,
     searchPlaceholder: 'Search for products, brands, and more...',
     onSearch: (query) => console.log('Search query:', query),
-    mobileMenuContent: (
-      <div className="space-y-4">
-        <div>
-          <h3 className="text-sm font-semibold text-foreground-secondary mb-2">
-            Quick Links
-          </h3>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="/orders"
-                className="block px-4 py-2 text-foreground hover:bg-background-secondary rounded-lg transition-colors"
-              >
-                My Orders
-              </a>
-            </li>
-            <li>
-              <a
-                href="/settings"
-                className="block px-4 py-2 text-foreground hover:bg-background-secondary rounded-lg transition-colors"
-              >
-                Settings
-              </a>
-            </li>
-            <li>
-              <a
-                href="/help"
-                className="block px-4 py-2 text-foreground hover:bg-background-secondary rounded-lg transition-colors"
-              >
-                Help Center
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="pt-4 border-t border-surface-active">
-          <button className="w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
-            Logout
-          </button>
-        </div>
-      </div>
-    ),
+    mobileMenuNavigationLinks: [
+      {
+        title: 'Quick Links',
+        links: [
+          { id: 'orders', label: 'My Orders', href: '/orders', isAnchor: true },
+          {
+            id: 'settings',
+            label: 'Settings',
+            href: '/settings',
+            isAnchor: true,
+          },
+          { id: 'help', label: 'Help Center', href: '/help', isAnchor: true },
+        ],
+      },
+    ],
   },
 };
 
 export const MinimalNavbar: Story = {
   args: {
     brand: <span className="text-2xl font-black text-white">BRAND</span>,
+    navigationLinks: demoNavLinks,
     searchPlaceholder: 'Search...',
   },
 };
@@ -286,8 +198,8 @@ export const MinimalNavbar: Story = {
 export const EcommerceNavbar: Story = {
   args: {
     brand: <BrandLogo />,
-    navigationLinks: sampleLinks,
-    navigationIcons: [
+    navigationLinks: sampleNavLinks,
+    appNavigationItems: [
       <button
         key="cart"
         className="relative p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
@@ -307,8 +219,8 @@ export const EcommerceNavbar: Story = {
 export const WithoutSearch: Story = {
   args: {
     brand: <BrandLogo />,
-    navigationLinks: sampleLinks,
-    navigationIcons: sampleIcons,
+    navigationLinks: sampleNavLinks,
+    appNavigationItems: sampleIcons,
     searchEnabled: false,
   },
 };
@@ -316,7 +228,7 @@ export const WithoutSearch: Story = {
 export const WithCustomClassName: Story = {
   args: {
     brand: <BrandLogo />,
-    navigationLinks: sampleLinks,
+    navigationLinks: sampleNavLinks,
     className: 'shadow-xl',
     searchPlaceholder: 'Search...',
   },
@@ -325,36 +237,23 @@ export const WithCustomClassName: Story = {
 export const FullFeaturedWithSubheader: Story = {
   args: {
     brand: <BrandLogo />,
-    navigationIcons: sampleIcons,
-    navigationLinks: sampleLinks,
+    appNavigationItems: sampleIcons,
+    navigationLinks: sampleNavLinks,
     searchPlaceholder: 'Search for products, brands, and more...',
     onSearch: (query) => console.log('Search query:', query),
-    mobileMenuContent: (
-      <div className="space-y-4">
-        <div>
-          <h3 className="text-sm font-semibold text-foreground-secondary mb-2">
-            Quick Links
-          </h3>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="/orders"
-                className="block px-4 py-2 text-foreground hover:bg-background-secondary rounded-lg transition-colors"
-              >
-                My Orders
-              </a>
-            </li>
-            <li>
-              <a
-                href="/settings"
-                className="block px-4 py-2 text-foreground hover:bg-background-secondary rounded-lg transition-colors"
-              >
-                Settings
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    ),
+    mobileMenuNavigationLinks: [
+      {
+        title: 'Quick Links',
+        links: [
+          { id: 'orders', label: 'My Orders', href: '/orders', isAnchor: true },
+          {
+            id: 'settings',
+            label: 'Settings',
+            href: '/settings',
+            isAnchor: true,
+          },
+        ],
+      },
+    ],
   },
 };

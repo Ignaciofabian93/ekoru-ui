@@ -3,7 +3,6 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import Navbar from './Navigation';
-import { Home, ShoppingCart } from 'lucide-react';
 
 describe('Navbar', () => {
   const defaultProps = {
@@ -67,7 +66,7 @@ describe('Navbar', () => {
         Icon 2
       </div>,
     ];
-    render(<Navbar {...defaultProps} navigationIcons={icons} />);
+    render(<Navbar {...defaultProps} appNavigationItems={icons} />);
 
     expect(screen.getByTestId('test-icon-1')).toBeInTheDocument();
     expect(screen.getByTestId('test-icon-2')).toBeInTheDocument();
@@ -75,17 +74,13 @@ describe('Navbar', () => {
 
   it('renders navigation links', () => {
     const links = [
-      <a key="home" href="/">
-        <Home data-testid="home-icon" /> Home
-      </a>,
-      <a key="cart" href="/cart">
-        <ShoppingCart data-testid="cart-icon" /> Cart
-      </a>,
+      { id: 'home', label: 'Home' },
+      { id: 'cart', label: 'Cart' },
     ];
     render(<Navbar {...defaultProps} navigationLinks={links} />);
 
-    expect(screen.getByText(/Home/)).toBeInTheDocument();
-    expect(screen.getByText(/Cart/)).toBeInTheDocument();
+    expect(screen.getByText('Home')).toBeInTheDocument();
+    expect(screen.getByText('Cart')).toBeInTheDocument();
   });
 
   it('toggles mobile menu when button is clicked', async () => {
@@ -170,7 +165,9 @@ describe('Navbar', () => {
     const customContent = (
       <div data-testid="custom-content">Custom Menu Content</div>
     );
-    render(<Navbar {...defaultProps} mobileMenuContent={customContent} />);
+    render(
+      <Navbar {...defaultProps} mobileMenuAppNavigationItems={customContent} />
+    );
 
     const menuButton = screen.getByLabelText('Toggle mobile menu');
     await user.click(menuButton);
@@ -189,15 +186,19 @@ describe('Navbar', () => {
 
   it('renders navigation links in mobile menu', async () => {
     const user = userEvent.setup();
-    const links = [
-      <a key="home" href="/">
-        <Home /> Home
-      </a>,
-      <a key="products" href="/products">
-        <ShoppingCart /> Products
-      </a>,
+    const mobileSections = [
+      {
+        title: 'Main',
+        links: [
+          { id: 'home', label: 'Home' },
+          { id: 'products', label: 'Products' },
+        ],
+      },
     ];
-    render(<Navbar {...defaultProps} navigationLinks={links} />);
+
+    render(
+      <Navbar {...defaultProps} mobileMenuNavigationLinks={mobileSections} />
+    );
 
     const menuButton = screen.getByLabelText('Toggle mobile menu');
     await user.click(menuButton);
