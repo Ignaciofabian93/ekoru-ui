@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, Search, X } from 'lucide-react';
 import { cn } from '@/utils';
+import { Title } from '../Title';
+import { Text } from '../Text';
 
 export interface NavigationLinkProps {
   id: string;
@@ -310,9 +312,9 @@ export default function Navbar({
                 'overflow-y-auto'
               )}
             >
-              <div className="p-6">
+              <div className="pt-6 px-2">
                 {/* Menu Header */}
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-2 mx-4">
                   <motion.h2
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -328,8 +330,9 @@ export default function Navbar({
                       'p-2',
                       'rounded-lg',
                       'text-foreground',
-                      'hover:bg-background-secondary',
-                      'transition-colors'
+                      'hover:bg-primary/10',
+                      'transition-colors',
+                      'ease-in-out duration-200'
                     )}
                     aria-label="Close mobile menu"
                   >
@@ -342,13 +345,13 @@ export default function Navbar({
 
                 {/* Custom Mobile Menu Content */}
                 {mobileMenuNavigationLinks && (
-                  <div className="mt-6 pt-6 border-t border-surface-active">
+                  <div className="mt-2 pt-6">
                     {mobileMenuNavigationLinks.map((section, index) => (
-                      <div key={index} className="h-full overflow-y-auto pb-20">
+                      <div key={index} className="h-full overflow-y-auto pb-6">
                         <div className="p-4 space-y-1">
-                          <motion.h3 className="text-sm font-semibold text-text-muted uppercase tracking-wide mb-3">
+                          <Title level="h6" className="text-gray-600 mb-2">
                             {section.title}
-                          </motion.h3>
+                          </Title>
                           {section.links.map(({ id, isAnchor, href, label }) =>
                             isAnchor ? (
                               <motion.a
@@ -357,16 +360,15 @@ export default function Navbar({
                                 className={cn(
                                   'w-full flex items-center justify-between',
                                   'p-3',
-                                  'text-left',
-                                  'hover:bg-neutral-light/50',
-                                  'transition-colors',
-                                  'rounded-lg',
-                                  'border-b border-neutral/10'
+                                  'text-left'
                                 )}
                               >
-                                <motion.span className="font-medium text-text-primary">
+                                <Text
+                                  variant="small"
+                                  className="text-foreground hover:text-primary transition-colors ease-in-out duration-200"
+                                >
                                   {label}
-                                </motion.span>
+                                </Text>
                               </motion.a>
                             ) : (
                               <motion.button
@@ -375,16 +377,15 @@ export default function Navbar({
                                 className={cn(
                                   'w-full flex items-center justify-between',
                                   'p-3',
-                                  'text-left',
-                                  'hover:bg-neutral-light/50',
-                                  'transition-colors',
-                                  'rounded-lg',
-                                  'border-b border-neutral/10'
+                                  'text-left'
                                 )}
                               >
-                                <motion.span className="font-medium text-text-primary">
+                                <Text
+                                  variant="small"
+                                  className="text-foreground hover:text-primary transition-colors ease-in-out duration-200"
+                                >
                                   {label}
-                                </motion.span>
+                                </Text>
                               </motion.button>
                             )
                           )}

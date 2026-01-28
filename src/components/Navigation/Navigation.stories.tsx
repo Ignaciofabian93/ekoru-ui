@@ -88,6 +88,29 @@ const sampleMobileSections = [
       },
     ],
   },
+  {
+    title: 'Categories 2',
+    links: [
+      {
+        id: 'electronics',
+        label: 'Electronics',
+        href: '/category/electronics',
+        isAnchor: true,
+      },
+      {
+        id: 'clothing',
+        label: 'Clothing',
+        href: '/category/clothing',
+        isAnchor: true,
+      },
+      {
+        id: 'home-garden',
+        label: 'Home & Garden',
+        href: '/category/home',
+        isAnchor: true,
+      },
+    ],
+  },
 ];
 
 // Sample navigation icons
