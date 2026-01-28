@@ -1,5 +1,11 @@
 # @ekoru/ui
 
+## 0.1.7
+
+### Patch Changes
+
+- 6720bb2: mobile navigation styles fixed
+
 ## 0.1.6
 
 ### Patch Changes
