@@ -1,5 +1,11 @@
 # @ekoru/ui
 
+## 0.1.8
+
+### Patch Changes
+
+- e3318c9: navlinks spacing fixed
+
 ## 0.1.7
 
 ### Patch Changes
