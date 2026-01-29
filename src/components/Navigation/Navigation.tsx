@@ -188,7 +188,7 @@ export default function Navbar({
               {appNavigationItems}
 
               {/* Navigation Links - Desktop */}
-              <div className="hidden lg:flex items-center space-x-2">
+              <div className="hidden lg:flex items-center space-x-8">
                 {navigationLinks &&
                   navigationLinks.map((item, index) => (
                     <motion.a
