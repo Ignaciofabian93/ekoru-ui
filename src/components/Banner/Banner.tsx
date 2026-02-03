@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
-import { motion } from 'motion/react';
+import { motion, type HTMLMotionProps } from 'motion/react';
 
 const bannerVariants = cva(
   'p-4 md:p-5 rounded-xl w-[95%] mx-auto overflow-hidden relative',
@@ -44,14 +44,7 @@ const dotVariants = cva('w-3 h-3 rounded-full inline-block', {
 
 export interface BannerProps
   extends
-    Omit<
-      React.HTMLAttributes<HTMLDivElement>,
-      | 'onDrag'
-      | 'onDragEnd'
-      | 'onDragStart'
-      | 'onAnimationStart'
-      | 'onAnimationEnd'
-    >,
+    Omit<HTMLMotionProps<'div'>, 'color'>,
     VariantProps<typeof bannerVariants> {
   /**
    * The main title text of the banner
@@ -76,20 +69,51 @@ const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
       title,
       description,
       showDots = true,
+      // Motion props
+      initial,
+      animate,
+      exit,
+      transition,
+      variants,
+      whileHover,
+      whileTap,
+      whileFocus,
+      whileInView,
+      viewport,
+      onAnimationStart,
+      onAnimationComplete,
       ...props
     },
     ref
   ) => {
     const MotionDiv = motion.div;
 
+    // Group motion props
+    const motionProps = {
+      initial: initial || { opacity: 0, y: -20 },
+      animate,
+      exit,
+      transition: transition || { duration: 0.6 },
+      variants,
+      whileHover,
+      whileTap,
+      whileFocus,
+      whileInView: whileInView || { opacity: 1, y: 0 },
+      viewport: viewport || { once: true },
+      onAnimationStart,
+      onAnimationComplete,
+    };
+
+    // Filter undefined props
+    const cleanMotionProps = Object.fromEntries(
+      Object.entries(motionProps).filter(([_, value]) => value !== undefined)
+    );
+
     return (
       <MotionDiv
         ref={ref}
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
         className={cn(bannerVariants({ variant, animated, className }))}
+        {...cleanMotionProps}
         {...props}
       >
         {/* Subtle animated background for primary variant */}
