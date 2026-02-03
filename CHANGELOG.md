@@ -1,5 +1,11 @@
 # @ekoru/ui
 
+## 0.1.10
+
+### Patch Changes
+
+- 56dae5c: motion props added to button component
+
 ## 0.1.9
 
 ### Patch Changes
