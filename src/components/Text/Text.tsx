@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
+import { motion, type HTMLMotionProps } from 'motion/react';
 
 const textVariants = cva('transition-colors', {
   variants: {
@@ -53,8 +54,17 @@ const textVariants = cva('transition-colors', {
 
 type TextVariantProps = VariantProps<typeof textVariants>;
 
+type TextElement =
+  | 'p'
+  | 'span'
+  | 'label'
+  | 'blockquote'
+  | 'small'
+  | 'code'
+  | 'div';
+
 export interface TextProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, 'color'>, TextVariantProps {
+  extends Omit<HTMLMotionProps<'p'>, 'color'>, TextVariantProps {
   /**
    * The HTML element to render
    */
@@ -70,7 +80,7 @@ export interface TextProps
   /**
    * Render as a different element while maintaining variant styling
    */
-  as?: 'p' | 'span' | 'label' | 'blockquote' | 'small' | 'div' | 'code';
+  as?: TextElement;
 }
 
 const Text = React.forwardRef<HTMLElement, TextProps>(
@@ -85,23 +95,61 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
       as,
       htmlFor,
       children,
+      // Motion props
+      initial,
+      animate,
+      exit,
+      transition,
+      variants,
+      whileHover,
+      whileTap,
+      whileFocus,
+      whileInView,
+      viewport,
+      onAnimationStart,
+      onAnimationComplete,
       ...props
     },
     ref
   ) => {
-    const Component = (as || variant) as React.ElementType;
+    const Component = (as || variant) as TextElement;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const MotionComponent = motion[Component as keyof typeof motion] as any;
+
+    // Group motion props
+    const motionProps = {
+      initial,
+      animate,
+      exit,
+      transition,
+      variants,
+      whileHover,
+      whileTap,
+      whileFocus,
+      whileInView,
+      viewport,
+      onAnimationStart,
+      onAnimationComplete,
+    };
+
+    // Filtrar props undefined
+    const cleanMotionProps = Object.fromEntries(
+      Object.entries(motionProps).filter(([_, value]) => value !== undefined)
+    );
 
     return (
-      <Component
+      <MotionComponent
         ref={ref}
         htmlFor={variant === 'label' || as === 'label' ? htmlFor : undefined}
         className={cn(
           textVariants({ variant, size, weight, color, align, className })
         )}
+        {...cleanMotionProps}
         {...props}
       >
         {children}
-      </Component>
+      </MotionComponent>
     );
   }
 );

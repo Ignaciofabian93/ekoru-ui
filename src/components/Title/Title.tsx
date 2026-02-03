@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
+import { motion, type HTMLMotionProps } from 'motion/react';
 
 const titleVariants = cva('font-bold tracking-tight transition-colors', {
   variants: {
@@ -44,14 +45,14 @@ const titleVariants = cva('font-bold tracking-tight transition-colors', {
 
 type TitleVariantProps = VariantProps<typeof titleVariants>;
 
+type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
 export interface TitleProps
-  extends
-    Omit<React.HTMLAttributes<HTMLHeadingElement>, 'color'>,
-    TitleVariantProps {
+  extends Omit<HTMLMotionProps<'h1'>, 'color'>, TitleVariantProps {
   /**
    * The semantic heading level to render
    */
-  level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  level?: HeadingLevel;
   /**
    * Content to display
    */
@@ -59,26 +60,73 @@ export interface TitleProps
   /**
    * Whether to render as a different heading level for styling while maintaining semantic meaning
    */
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  as?: HeadingLevel;
 }
 
 const Title = React.forwardRef<HTMLHeadingElement, TitleProps>(
   (
-    { className, level = 'h1', weight, color, align, as, children, ...props },
+    {
+      className,
+      level = 'h1',
+      weight,
+      color,
+      align,
+      as,
+      children,
+      // Separar props de motion
+      initial,
+      animate,
+      exit,
+      transition,
+      variants,
+      whileHover,
+      whileTap,
+      whileFocus,
+      whileInView,
+      viewport,
+      onAnimationStart,
+      onAnimationComplete,
+      ...props
+    },
     ref
   ) => {
-    const Component = as || level;
+    const Component = (as || level) as HeadingLevel;
+
+    // Seleccionar el componente motion correcto
+    const MotionComponent = motion[Component];
+
+    // Agrupar props de motion
+    const motionProps = {
+      initial,
+      animate,
+      exit,
+      transition,
+      variants,
+      whileHover,
+      whileTap,
+      whileFocus,
+      whileInView,
+      viewport,
+      onAnimationStart,
+      onAnimationComplete,
+    };
+
+    // Filtrar props undefined para evitar warnings
+    const cleanMotionProps = Object.fromEntries(
+      Object.entries(motionProps).filter(([_, value]) => value !== undefined)
+    );
 
     return (
-      <Component
+      <MotionComponent
         ref={ref}
         className={cn(
           titleVariants({ level, weight, color, align, className })
         )}
+        {...cleanMotionProps}
         {...props}
       >
         {children}
-      </Component>
+      </MotionComponent>
     );
   }
 );
