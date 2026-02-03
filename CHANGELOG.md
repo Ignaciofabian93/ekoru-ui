@@ -1,5 +1,11 @@
 # @ekoru/ui
 
+## 0.1.11
+
+### Patch Changes
+
+- c93eb38: motion props added to banner
+
 ## 0.1.10
 
 ### Patch Changes
