@@ -1,5 +1,11 @@
 # @ekoru/ui
 
+## 0.1.9
+
+### Patch Changes
+
+- f8a71f0: text and title with motion props
+
 ## 0.1.8
 
 ### Patch Changes
