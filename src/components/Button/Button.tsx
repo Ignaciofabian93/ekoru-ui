@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, type HTMLMotionProps } from 'motion/react';
 import { Loader2 } from 'lucide-react';
 
 const buttonVariants = cva(
@@ -43,14 +43,7 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends
-    Omit<
-      React.ButtonHTMLAttributes<HTMLButtonElement>,
-      | 'onDrag'
-      | 'onDragEnd'
-      | 'onDragStart'
-      | 'onAnimationStart'
-      | 'onAnimationEnd'
-    >,
+    Omit<HTMLMotionProps<'button'>, 'color'>,
     VariantProps<typeof buttonVariants> {
   /**
    * If true, the button will show a loading spinner
@@ -80,20 +73,61 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       disabled,
       loadingText = 'Loading...',
+      // Motion props
+      initial,
+      animate,
+      exit,
+      transition,
+      variants,
+      whileHover,
+      whileTap,
+      whileFocus,
+      whileInView,
+      viewport,
+      onAnimationStart,
+      onAnimationComplete,
       ...props
     },
     ref
   ) => {
     const MotionButton = motion.button;
 
+    // Group motion props
+    const motionProps = {
+      initial,
+      animate,
+      exit,
+      transition,
+      variants,
+      whileHover: whileHover || { scale: 1.02, y: -2 },
+      whileTap: whileTap || { scale: 0.96, y: 0 },
+      whileFocus,
+      whileInView,
+      viewport,
+      onAnimationStart,
+      onAnimationComplete,
+    };
+
+    // Filter undefined props
+    const cleanMotionProps = Object.fromEntries(
+      Object.entries(motionProps).filter(([_, value]) => value !== undefined)
+    );
+
+    // Apply default transition if none provided
+    if (!transition && !cleanMotionProps.transition) {
+      cleanMotionProps.transition = {
+        type: 'spring',
+        stiffness: 400,
+        damping: 17,
+      };
+    }
+
     return (
       <MotionButton
         className={cn(buttonVariants({ variant, size, fullWidth, className }))}
         ref={ref}
         disabled={disabled || isLoading}
-        whileHover={{ scale: 1.02, y: -2 }}
-        whileTap={{ scale: 0.96, y: 0 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+        {...cleanMotionProps}
         {...props}
       >
         <AnimatePresence mode="wait">
@@ -126,7 +160,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             </motion.span>
           )}
         </AnimatePresence>
-        {isLoading ? loadingText : children}
+        {isLoading ? loadingText : (children as React.ReactNode)}
         {!isLoading && rightIcon && (
           <span className="ml-2 inline-flex items-center justify-center flex-shrink-0">
             {React.isValidElement(rightIcon)
